@@ -19,7 +19,7 @@ $ duffle creds generate wordpress-creds -f ./bundle.cnab
 Install Wordpress in k8s
 
 ```
-$ duffle install -c wordpress-creds my_release -f ./wordpress-k8s-rds/bundle.cnab
+$ duffle install -c wordpress-creds my_release -f ./bundle.cnab
 ```
 
 You can also update, uninstall or get the status of a release
