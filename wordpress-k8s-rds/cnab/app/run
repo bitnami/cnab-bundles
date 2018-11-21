@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd /cnab/app
+make $CNAB_ACTION

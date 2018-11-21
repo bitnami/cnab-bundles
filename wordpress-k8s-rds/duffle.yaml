@@ -1,0 +1,17 @@
+name: wordpress-k8s-rds
+version: 0.1.0
+description: Wordpress running in K8s connected to a provisioned RDS instance
+keywords: []
+maintainers: []
+components:
+  cnab:
+    name: cnab
+    builder: docker
+    configuration:
+      registry: gcr.io/bitnami-images
+parameters: {}
+credentials:
+  # TODO: Add aws credentials
+  kubeconfig:
+    path: "/root/.kube/config"
+
