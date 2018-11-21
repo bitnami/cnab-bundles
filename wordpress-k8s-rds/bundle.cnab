@@ -1,0 +1,35 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+{
+  "name": "wordpress-k8s-rds",
+  "version": "0.1.0",
+  "description": "Wordpress running in K8s connected to a provisioned RDS instance",
+  "invocationImages": [
+    {
+      "imageType": "docker",
+      "image": "gcr.io/bitnami-images/wordpress-k8s-rds-cnab:7380235df5e128b441da50f6c59aa649ee25571a"
+    }
+  ],
+  "images": [],
+  "parameters": null,
+  "credentials": {
+    "kubeconfig": {
+      "path": "/root/.kube/config",
+      "env": ""
+    }
+  }
+}
+-----BEGIN PGP SIGNATURE-----
+
+wsDcBAEBCAAQBQJb9LWxCRDrvsr1XzM6xgAA41EMAFB0LvKqQwSxt2fS8BA3gRcP
+2GjmkEp/riP3jWrOCMzKzuOCzB6SbgMpl53OG3Ukf04CxWeWZzc/4ObF0+gCCPvT
+a71isNlotdCh9Wm6AXE8mTF9uDdYa1wpwjb2VN+YE4j02NuctcegUJdVUn1lzcXi
+vyj6NdQQQJNkLmP5U4EsCFv8cy/HibF9XbXNJJDjRGoA5Pq931yDQiOi8D2zm0dE
+xlHnRf8lvERyADPaLKJ8z1tCE3CzGfEGdqs4rAI0yCxnxhgUB2egu79nX1Uj7Kzp
+22rkXTswa2t8yqfDJEaim+aHxYajCkmrj7QJlX6wa2WToWEN3XhO+QwzcHLNsisz
+j5PgYl5pYIMB0kkDwPpb5owbIGJJKemuRQeDimjQowsGWkLDCiMHIoryjQQi2qy3
+rWIsRiDRA6mRsSk7gYs87koglG5CpuKYi0NDogqWUgJP9QDdap2R0moJzWhby7ed
+HO9gXCnrHqSNnyhR0Q4GpgsjVkEE/CN+oDzamFgNhQ==
+=n3CU
+-----END PGP SIGNATURE-----
