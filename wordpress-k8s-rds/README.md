@@ -25,7 +25,7 @@ $ duffle install -c wordpress-creds my_release -f ./bundle.cnab
 You can also update, uninstall or get the status of a release
 
 ```
-$ duffle uninstall|status|upgrade -c kubeconfig my_release
+$ duffle uninstall|status|upgrade -c wordpress-creds my_release
 ```
 
 ## BUILD
