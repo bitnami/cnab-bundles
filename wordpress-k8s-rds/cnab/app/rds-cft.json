@@ -1,0 +1,736 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Template for a Java application using Tomcat and MySQL: @@APP_NAME@@ @@APP_VERSION@@",
+  "Metadata": {
+    "AWS::CloudFormation::Interface": {
+      "ParameterGroups": [
+        {
+          "Label": {
+            "default": "Application Configuration"
+          },
+          "Parameters": [
+            "InstancesType",
+            "InstancesDiskSize"
+          ]
+        },
+        {
+          "Label": {
+            "default": "Database Configuration"
+          },
+          "Parameters": [
+            "DatabasePassword",
+            "DatabaseInstanceType",
+            "DatabaseAllocatedStorage"
+          ]
+        },
+        {
+          "Label": {
+            "default": "Network Configuration"
+          },
+          "Parameters": [
+            "SSHKeyName"
+          ]
+        },
+        {
+          "Label": {
+            "default": "Advanced settings"
+          },
+          "Parameters": [
+            "InstanceCount",
+            "DatabaseBackupRetentionPeriod"
+          ]
+        }
+      ],
+      "ParameterLabels": {
+        "InstancesType": {
+          "default": "Application instance type"
+        },
+        "InstancesDiskSize": {
+          "default": "Root disk size"
+        },
+        "InstanceCount": {
+          "default": "Instance(s) to start"
+        },
+        "SSHKeyName": {
+          "default": "SSH key name"
+        },
+        "DatabasePassword": {
+          "default": "Database root password"
+        },
+        "DatabaseInstanceType": {
+          "default": "Database instance type"
+        },
+        "DatabaseAllocatedStorage": {
+          "default": "Database allocated storage"
+        },
+        "DatabaseBackupRetentionPeriod": {
+          "default": "Database backup retention"
+        }
+      }
+    }
+  },
+  "Parameters": {
+    "InstancesDiskSize": {
+      "Description": "Disk size in GB, This must be between 10 and 1024 GB",
+      "Type": "Number",
+      "MinValue": "10",
+      "MaxValue": "1024",
+      "Default": "10",
+      "ConstraintDescription": "Disk size must be between 10 and 1024 GB"
+    },
+    "SSHKeyName": {
+      "Description": "SSH Key Name",
+      "Type": "AWS::EC2::KeyPair::KeyName",
+      "AllowedPattern": ".+",
+      "ConstraintDescription": "Your SSH Key cannot be blank. Please add an SSH key to the application."
+    },
+    "InstancesType": {
+      "Description": "Select the instance type for the instance",
+      "Type": "String",
+      "Default": "t2.medium",
+      "AllowedValues": [
+        "t2.small",
+        "t2.medium",
+        "t2.large",
+        "t2.xlarge",
+        "t2.2xlarge",
+        "m5.large",
+        "m5.xlarge",
+        "m5.2xlarge",
+        "m5.4xlarge",
+        "m5.12xlarge",
+        "m5.24xlarge",
+        "m4.large",
+        "m4.xlarge",
+        "m4.2xlarge",
+        "m4.4xlarge",
+        "m4.10xlarge",
+        "m4.16xlarge",
+        "m3.medium",
+        "m3.large",
+        "m3.xlarge",
+        "m3.2xlarge",
+        "c5.large",
+        "c5.xlarge",
+        "c5.2xlarge",
+        "c5.4xlarge",
+        "c5.9xlarge",
+        "c5.18xlarge",
+        "c4.large",
+        "c4.xlarge",
+        "c4.2xlarge",
+        "c4.4xlarge",
+        "c4.8xlarge",
+        "c3.large",
+        "c3.xlarge",
+        "c3.2xlarge",
+        "c3.4xlarge",
+        "c3.8xlarge",
+        "r4.large",
+        "r4.xlarge",
+        "r4.2xlarge",
+        "r4.4xlarge",
+        "r4.8xlarge",
+        "r4.16xlarge",
+        "r3.large",
+        "r3.xlarge",
+        "r3.2xlarge",
+        "r3.4xlarge",
+        "r3.8xlarge",
+        "i3.xlarge",
+        "i3.2xlarge",
+        "i3.4xlarge",
+        "i3.8xlarge",
+        "i3.16xlarge",
+        "i2.xlarge",
+        "i2.2xlarge",
+        "i2.4xlarge",
+        "i2.8xlarge",
+        "i3.large",
+        "x1e.xlarge",
+        "x1e.2xlarge",
+        "x1e.4xlarge",
+        "x1e.8xlarge",
+        "x1e.16xlarge",
+        "x1e.32xlarge",
+        "x1.16xlarge",
+        "x1.32xlarge"
+      ]
+    },
+    "InstanceCount": {
+      "Description": "Number of instances to launch. IMPORTANT: Do not change from 1 unless the application only stores state and session data in a database, not in local filesystem.",
+      "Type": "Number",
+      "MinValue": "1",
+      "Default": "1",
+      "ConstraintDescription": "Number of instances to launch must be at least 1"
+    },
+    "DatabasePassword": {
+      "Description": "Set the root password for the database. Pick a strong alphanumeric password and store the value somewhere safe.",
+      "Type": "String",
+      "MinLength": "8",
+      "AllowedPattern": "^[a-zA-Z0-9]*$",
+      "ConstraintDescription": "You must set an alphanumeric database root password that is at least 8 characters.",
+      "NoEcho": "true"
+    },
+    "DatabaseInstanceType": {
+      "Description": "Select the instance type for the instance",
+      "Type": "String",
+      "Default": "db.t2.small",
+      "AllowedValues": [
+        "db.m4.large",
+        "db.m4.xlarge",
+        "db.m4.2xlarge",
+        "db.m4.4xlarge",
+        "db.m4.10xlarge",
+        "db.m4.16xlarge",
+        "db.m3.medium",
+        "db.m3.large",
+        "db.m3.xlarge",
+        "db.m3.2xlarge",
+        "db.r4.large",
+        "db.r4.xlarge",
+        "db.r4.2xlarge",
+        "db.r4.4xlarge",
+        "db.r4.8xlarge",
+        "db.r4.16xlarge",
+        "db.r3.large",
+        "db.r3.xlarge",
+        "db.r3.2xlarge",
+        "db.r3.4xlarge",
+        "db.r3.8xlarge",
+        "db.t2.micro",
+        "db.t2.small",
+        "db.t2.medium",
+        "db.t2.large",
+        "db.t2.xlarge",
+        "db.t2.2xlarge"
+      ]
+    },
+    "DatabaseAllocatedStorage": {
+      "Description": "Database allocated storage in GB. This must be at least 20 GB.",
+      "Type": "Number",
+      "MinValue": "20",
+      "Default": "20",
+      "ConstraintDescription": "Database allocated storage must be at least 20 GB"
+    },
+    "DatabaseBackupRetentionPeriod": {
+      "Description": "Number of days for which backups are retained ; setting to 0 disabled backups ; any positive value enables backups",
+      "Type": "Number",
+      "MinValue": "0",
+      "MaxValue": "35",
+      "Default": "1",
+      "ConstraintDescription": "Database backup retention period must be between 0 and 35 days"
+    }
+  },
+  "Conditions": {
+    "AlwaysTrue": {
+      "Fn::Equals": [
+        true,
+        true
+      ]
+    }
+  },
+  "Mappings": {
+    "RegionMap": {
+      "us-east-1": {
+        "AMI": "@@IMAGE@@",
+        "AZ1": "us-east-1a",
+        "AZ2": "us-east-1b"
+      }
+    },
+    "DatabaseConfig": {
+      "Primary": {
+        "DBName": "app_db",
+        "Engine": "mysql",
+        "EngineVersion": "5.7.19",
+        "MasterUsername": "root",
+        "Port": "3306"
+      }
+    }
+  },
+  "Outputs": {
+    "PublicDnsName": {
+      "Description": "Public DNS name for your application",
+      "Value": { "Fn::Join" : [ "", [ "http://", { "Fn::GetAtt" : [
+        "ApplicationLoadBalancer", "DNSName" ]}]]}
+    }
+  },
+  "Resources": {
+    "NullWaitHandle": {
+      "Type": "AWS::CloudFormation::WaitConditionHandle"
+    },
+    "Vpc": {
+      "Type": "AWS::EC2::VPC",
+      "Properties": {
+        "CidrBlock": "10.0.0.0/16",
+        "Tags": [
+          {
+            "Value": {
+              "Ref": "AWS::StackName"
+            },
+            "Key": "Application"
+          },
+          {
+            "Value": "Public",
+            "Key": "Network"
+          }
+        ],
+        "EnableDnsHostnames": "true",
+        "EnableDnsSupport": "true"
+      }
+    },
+    "VpcWaitHandle": {
+      "Type": "AWS::CloudFormation::WaitConditionHandle",
+      "DependsOn": "Vpc"
+    },
+    "VpcWaitCondition": {
+      "Type": "AWS::CloudFormation::WaitCondition",
+      "Properties": {
+        "Handle": { "Ref": "VpcWaitHandle" },
+        "Timeout": "1",
+        "Count": "0"
+      }
+    },
+    "PublicSubnetA": {
+      "Type": "AWS::EC2::Subnet",
+      "DependsOn": "VpcWaitCondition",
+      "Properties": {
+        "CidrBlock": "10.0.8.0/22",
+        "AvailabilityZone": { "Fn::FindInMap": [ "RegionMap", { "Ref": "AWS::Region" }, "AZ1" ] },
+        "Tags": [
+          {
+            "Value": {
+              "Ref": "AWS::StackName"
+            },
+            "Key": "Application"
+          },
+          {
+            "Value": "Public",
+            "Key": "Network"
+          }
+        ],
+        "VpcId": { "Ref": "Vpc" }
+      }
+    },
+    "PublicSubnetB": {
+      "Type": "AWS::EC2::Subnet",
+      "DependsOn": "VpcWaitCondition",
+      "Properties": {
+        "CidrBlock": "10.0.12.0/22",
+        "AvailabilityZone": { "Fn::FindInMap": [ "RegionMap", { "Ref": "AWS::Region" }, "AZ2" ] },
+        "Tags": [
+          {
+            "Value": {
+              "Ref": "AWS::StackName"
+            },
+            "Key": "Application"
+          },
+          {
+            "Value": "Public",
+            "Key": "Network"
+          }
+        ],
+        "VpcId": { "Ref": "Vpc" }
+      }
+    },
+    "InternetGateway": {
+      "Type": "AWS::EC2::InternetGateway",
+      "Properties": {
+        "Tags": [
+          {
+            "Value": {
+              "Ref": "AWS::StackName"
+            },
+            "Key": "Application"
+          },
+          {
+            "Value": "Public",
+            "Key": "Network"
+          }
+        ]
+      }
+    },
+    "GatewayToInternet": {
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+      "Properties": {
+        "InternetGatewayId": {
+          "Ref": "InternetGateway"
+        },
+        "VpcId": {
+          "Ref": "Vpc"
+        }
+      }
+    },
+    "GatewayToInternetWaitHandle": {
+      "Type": "AWS::CloudFormation::WaitConditionHandle",
+      "DependsOn": "GatewayToInternet"
+    },
+    "GatewayToInternetWaitCondition": {
+      "Type": "AWS::CloudFormation::WaitCondition",
+      "Properties": {
+        "Handle": { "Ref": "GatewayToInternetWaitHandle" },
+        "Timeout": "1",
+        "Count": "0"
+      }
+    },
+    "PublicRouteTable": {
+      "Type": "AWS::EC2::RouteTable",
+      "DependsOn": "VpcWaitCondition",
+      "Properties": {
+        "VpcId": { "Ref": "Vpc" }
+      }
+    },
+    "PublicRoute": {
+      "Type": "AWS::EC2::Route",
+      "DependsOn": "GatewayToInternetWaitCondition",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "PublicRouteTable"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": { "Ref": "InternetGateway" }
+      }
+    },
+    "PublicSubnetRouteTableAssociationA": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "SubnetId": {
+          "Ref": "PublicSubnetA"
+        },
+        "RouteTableId": {
+          "Ref": "PublicRouteTable"
+        }
+      }
+    },
+    "PublicSubnetRouteTableAssociationB": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "SubnetId": {
+          "Ref": "PublicSubnetB"
+        },
+        "RouteTableId": {
+          "Ref": "PublicRouteTable"
+        }
+      }
+    },
+    "PrivateSubnetA": {
+      "Type": "AWS::EC2::Subnet",
+      "DependsOn": "VpcWaitCondition",
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::FindInMap": [
+            "RegionMap",
+            {
+              "Ref": "AWS::Region"
+            },
+            "AZ1"
+          ]
+        },
+        "CidrBlock": "10.0.0.0/22",
+        "Tags": [
+          {
+            "Value": {
+              "Ref": "AWS::StackName"
+            },
+            "Key": "Application"
+          },
+          {
+            "Value": "Private",
+            "Key": "Network"
+          }
+        ],
+        "VpcId": { "Ref": "Vpc" }
+      }
+    },
+    "PrivateSubnetB": {
+      "Type": "AWS::EC2::Subnet",
+      "DependsOn": "VpcWaitCondition",
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::FindInMap": [
+            "RegionMap",
+            {
+              "Ref": "AWS::Region"
+            },
+            "AZ2"
+          ]
+        },
+        "CidrBlock": "10.0.4.0/22",
+        "Tags": [
+          {
+            "Value": {
+              "Ref": "AWS::StackName"
+            },
+            "Key": "Application"
+          },
+          {
+            "Value": "Private",
+            "Key": "Network"
+          }
+        ],
+        "VpcId": { "Ref": "Vpc" }
+      }
+    },
+    "InstanceSecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Security Group for the instance",
+        "SecurityGroupIngress": [
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 22,
+            "ToPort": 22,
+            "CidrIp": "0.0.0.0/0"
+          },
+          {
+            "IpProtocol" : "tcp",
+            "FromPort" : "8080",
+            "ToPort" : "8080",
+            "SourceSecurityGroupId" : {"Fn::Select" : [0, {"Fn::GetAtt" : ["ApplicationLoadBalancer", "SecurityGroups"]}]}
+          }
+        ],
+        "Tags": [
+          {
+            "Value": {
+              "Ref": "AWS::StackName"
+            },
+            "Key": "Application"
+          },
+          {
+            "Value": "Public",
+            "Key": "Network"
+          }
+        ],
+        "VpcId": { "Ref": "Vpc" }
+      },
+      "DependsOn": ["ApplicationLoadBalancer", "VpcWaitCondition" ]
+    },
+    "AppGroup": {
+      "Type": "AWS::AutoScaling::AutoScalingGroup",
+      "Properties": {
+        "VPCZoneIdentifier" : [
+          { "Ref" : "PublicSubnetA" }, { "Ref" : "PublicSubnetB" }
+        ],
+        "TargetGroupARNs" : [ { "Ref" : "ALBTargetGroup" } ],
+        "AvailabilityZones": [
+          { "Fn::GetAtt": [ "PublicSubnetA", "AvailabilityZone" ] },
+          { "Fn::GetAtt": [ "PublicSubnetB", "AvailabilityZone" ] }
+        ],
+        "Tags": [
+          {
+            "Value": {
+              "Ref": "AWS::StackName"
+            },
+            "Key": "Application",
+            "PropagateAtLaunch": true
+          }
+        ],
+        "LaunchConfigurationName": {
+          "Ref": "AppLaunchConfiguration"
+        },
+        "MinSize": { "Ref": "InstanceCount" },
+        "MaxSize": { "Ref": "InstanceCount" }
+      },
+      "UpdatePolicy" : {
+        "AutoScalingReplacingUpdate" : {
+          "WillReplace" : true
+        }
+      }
+    },
+    "AppLaunchConfiguration": {
+      "Type": "AWS::AutoScaling::LaunchConfiguration",
+      "Metadata": {
+        "AWS::CloudFormation::Init": {
+          "config": {
+            "files": {
+              "/opt/stacksmith/cfn-user-data": {
+                "mode": "000600", "owner": "root", "group": "root",
+                "content": { "Fn::Join": ["", [
+                  "DATABASE_HOST=", { "Fn::GetAtt": ["Database", "Endpoint.Address"] }, "\n",
+                  "DATABASE_PORT=", { "Fn::GetAtt": ["Database", "Endpoint.Port"] }, "\n",
+                  "DATABASE_USER=", { "Fn::FindInMap": ["DatabaseConfig", "Primary", "MasterUsername"] }, "\n",
+                  "DATABASE_PASSWORD=", { "Ref": "DatabasePassword" }, "\n",
+                  "DATABASE_NAME=", { "Fn::FindInMap": ["DatabaseConfig", "Primary", "DBName"] }, "\n",
+                  "DATABASE_TYPE=", { "Fn::FindInMap": ["DatabaseConfig", "Primary", "Engine"] }, "\n",
+                  "\n"]]}
+              }
+            }
+          }
+        }
+      },
+      "Properties": {
+        "AssociatePublicIpAddress": "true",
+        "KeyName": {
+          "Ref": "SSHKeyName"
+        },
+        "ImageId": {
+          "Fn::FindInMap": [
+            "RegionMap",
+            {
+              "Ref": "AWS::Region"
+            },
+            "AMI"
+          ]
+        },
+        "InstanceType": {
+          "Ref": "InstancesType"
+        },
+        "InstanceMonitoring": false,
+        "PlacementTenancy": "default",
+        "SecurityGroups" : [ { "Ref" : "InstanceSecurityGroup" } ],
+        "UserData": { "Fn::Base64": { "Fn::Join": ["", [
+          "CFN_INIT_ENABLED=true\n",
+          "CFN_INIT_STACK=", { "Ref" : "AWS::StackName" }, "\n",
+          "CFN_INIT_RESOURCE=AppLaunchConfiguration\n",
+          "CFN_INIT_REGION=", { "Ref" : "AWS::Region" }, "\n",
+          "\n"
+        ]]}},
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/sda1",
+            "Ebs": {
+              "VolumeType": "gp2",
+              "DeleteOnTermination": "true",
+              "VolumeSize": {
+                "Ref": "InstancesDiskSize"
+              }
+            }
+          }
+        ]
+      },
+      "DependsOn": "GatewayToInternetWaitCondition"
+    },
+    "ALBSecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "DependsOn": "VpcWaitCondition",
+      "Properties": {
+        "GroupDescription": "Security Group for the load balancer",
+        "SecurityGroupIngress": [
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 80,
+            "ToPort": 80,
+            "CidrIp": "0.0.0.0/0"
+          }
+        ],
+        "Tags": [
+          {
+            "Value": {
+              "Ref": "AWS::StackName"
+            },
+            "Key": "Application"
+          }
+        ],
+        "VpcId": { "Ref": "Vpc" }
+      }
+    },
+    "ApplicationLoadBalancer" : {
+      "Type" : "AWS::ElasticLoadBalancingV2::LoadBalancer",
+      "Properties" : {
+        "SecurityGroups": [{ "Ref": "ALBSecurityGroup" }],
+        "Tags": [
+          {
+            "Value": {
+              "Ref": "AWS::StackName"
+            },
+            "Key": "Application"
+          },
+          {
+            "Value": "Public",
+            "Key": "Network"
+          }
+        ],
+        "Subnets" : [
+          { "Ref" : "PublicSubnetA" },
+          { "Ref" : "PublicSubnetB" }
+        ]
+      },
+      "DependsOn": "GatewayToInternetWaitCondition"
+    },
+    "ALBListener" : {
+      "Type" : "AWS::ElasticLoadBalancingV2::Listener",
+      "Properties" : {
+        "DefaultActions" : [{
+          "Type" : "forward",
+          "TargetGroupArn" : { "Ref" : "ALBTargetGroup" }
+        }],
+        "LoadBalancerArn" : { "Ref" : "ApplicationLoadBalancer" },
+        "Port" : "80",
+        "Protocol" : "HTTP"
+      }
+    },
+    "ALBTargetGroup" : {
+      "Type" : "AWS::ElasticLoadBalancingV2::TargetGroup",
+      "DependsOn": "VpcWaitCondition",
+      "Properties": {
+        "Port": 8080,
+        "Protocol": "HTTP",
+        "VpcId": { "Ref": "Vpc" },
+        "Matcher": { "HttpCode" : "200,404" }
+      }
+    },
+    "DBSubnetGroup": {
+      "Type" : "AWS::RDS::DBSubnetGroup",
+      "Properties" : {
+        "DBSubnetGroupDescription": "SubnetGroup for database",
+        "SubnetIds" : [ { "Ref": "PrivateSubnetA" }, { "Ref": "PrivateSubnetB" } ]
+      }
+    },
+    "DatabaseSecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "DependsOn": "VpcWaitCondition",
+      "Properties": {
+        "Tags": [
+          {
+            "Value": {
+              "Ref": "AWS::StackName"
+            },
+            "Key": "Application"
+          },
+          {
+            "Value": "Private",
+            "Key": "Network"
+          }
+        ],
+        "GroupDescription": "Security Group for the database",
+        "SecurityGroupIngress": [
+          {
+            "IpProtocol": "tcp",
+            "FromPort": { "Fn::FindInMap": ["DatabaseConfig", "Primary", "Port"] },
+            "ToPort": { "Fn::FindInMap": ["DatabaseConfig", "Primary", "Port"] },
+            "SourceSecurityGroupId": { "Ref": "InstanceSecurityGroup" }
+          }
+        ],
+        "VpcId": { "Ref": "Vpc" }
+      }
+    },
+    "Database": {
+      "Type": "AWS::RDS::DBInstance",
+      "Description": "Database",
+      "Properties": {
+        "Tags": [
+          {
+            "Value": {
+              "Ref": "AWS::StackName"
+            },
+            "Key": "Application"
+          }
+        ],
+        "AllocatedStorage": { "Ref": "DatabaseAllocatedStorage" },
+        "StorageType": "gp2",
+        "DBInstanceClass": { "Ref": "DatabaseInstanceType" },
+        "DBName": { "Fn::FindInMap": ["DatabaseConfig", "Primary", "DBName"] },
+        "DBSubnetGroupName": { "Ref": "DBSubnetGroup" },
+        "MultiAZ": false,
+        "Engine": { "Fn::FindInMap": ["DatabaseConfig", "Primary", "Engine"] },
+        "EngineVersion": { "Fn::FindInMap": ["DatabaseConfig", "Primary", "EngineVersion"] },
+        "MasterUsername": { "Fn::FindInMap": ["DatabaseConfig", "Primary", "MasterUsername"] },
+        "MasterUserPassword": { "Ref": "DatabasePassword" },
+        "BackupRetentionPeriod": { "Ref": "DatabaseBackupRetentionPeriod" },
+        "Port": { "Fn::FindInMap": ["DatabaseConfig", "Primary", "Port"] },
+        "PubliclyAccessible": "false",
+        "VPCSecurityGroups": [{ "Ref": "DatabaseSecurityGroup" }]
+      }
+    }
+  }
+}
