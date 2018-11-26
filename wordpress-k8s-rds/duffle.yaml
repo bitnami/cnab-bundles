@@ -9,9 +9,17 @@ components:
     builder: docker
     configuration:
       registry: gcr.io/bitnami-images
-parameters: {}
+parameters:
+  aws-default-region:
+    type: string
+    defaultValue: us-west-2
+    destination:
+      env: AWS_DEFAULT_REGION
 credentials:
-  # TODO: Add aws credentials
   kubeconfig:
     path: "/root/.kube/config"
+  aws-access-key-id:
+    env: "AWS_ACCESS_KEY_ID"
+  aws-secret-access-key:
+    env: "AWS_SECRET_ACCESS_KEY"
 
