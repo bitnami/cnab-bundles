@@ -5,12 +5,14 @@ LABEL maintainer "Bitnami <containers@bitnami.com>"
 ENV HELM_VERSION="v2.11.0"
 ENV CHART_VERSION="4.0.0"
 
-# Install Helm
-RUN  install_packages ca-certificates wget make \
-     && wget https://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-linux-amd64.tar.gz \
-     && tar -xvf helm-${HELM_VERSION}-linux-amd64.tar.gz \
-     && mv linux-amd64/helm /usr/local/bin \
-     && rm -f /helm-${HELM_VERSION}-linux-amd64.tar.gz
+# Install Helm, aws-cli and other utilities
+RUN install_packages ca-certificates wget make jq python python-pip python-setuptools \
+    && wget https://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-linux-amd64.tar.gz \
+    && tar -xvf helm-${HELM_VERSION}-linux-amd64.tar.gz \
+    && mv linux-amd64/helm /usr/local/bin \
+    && rm -f /helm-${HELM_VERSION}-linux-amd64.tar.gz \
+    && pip install --upgrade awscli==1.16 \
+    && apt-get remove -y python-pip python-setuptools
 
 # Initialize Helm and download Wordpress Chart
 RUN helm init -c

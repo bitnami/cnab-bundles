@@ -8,12 +8,31 @@ Hash: SHA256
   "invocationImages": [
     {
       "imageType": "docker",
-      "image": "gcr.io/bitnami-images/wordpress-k8s-rds-cnab:7380235df5e128b441da50f6c59aa649ee25571a"
+      "image": "gcr.io/bitnami-images/wordpress-k8s-rds-cnab:abdf6a81a6fa224eb7276fc8bcec6abecde03de2"
     }
   ],
   "images": [],
-  "parameters": null,
+  "parameters": {
+    "aws-default-region": {
+      "type": "string",
+      "defaultValue": "us-west-2",
+      "required": false,
+      "metadata": {},
+      "destination": {
+        "path": "",
+        "env": "AWS_DEFAULT_REGION"
+      }
+    }
+  },
   "credentials": {
+    "aws-access-key-id": {
+      "path": "",
+      "env": "AWS_ACCESS_KEY_ID"
+    },
+    "aws-secret-access-key": {
+      "path": "",
+      "env": "AWS_SECRET_ACCESS_KEY"
+    },
     "kubeconfig": {
       "path": "/root/.kube/config",
       "env": ""
@@ -22,14 +41,14 @@ Hash: SHA256
 }
 -----BEGIN PGP SIGNATURE-----
 
-wsDcBAEBCAAQBQJb9LWxCRDrvsr1XzM6xgAA41EMAFB0LvKqQwSxt2fS8BA3gRcP
-2GjmkEp/riP3jWrOCMzKzuOCzB6SbgMpl53OG3Ukf04CxWeWZzc/4ObF0+gCCPvT
-a71isNlotdCh9Wm6AXE8mTF9uDdYa1wpwjb2VN+YE4j02NuctcegUJdVUn1lzcXi
-vyj6NdQQQJNkLmP5U4EsCFv8cy/HibF9XbXNJJDjRGoA5Pq931yDQiOi8D2zm0dE
-xlHnRf8lvERyADPaLKJ8z1tCE3CzGfEGdqs4rAI0yCxnxhgUB2egu79nX1Uj7Kzp
-22rkXTswa2t8yqfDJEaim+aHxYajCkmrj7QJlX6wa2WToWEN3XhO+QwzcHLNsisz
-j5PgYl5pYIMB0kkDwPpb5owbIGJJKemuRQeDimjQowsGWkLDCiMHIoryjQQi2qy3
-rWIsRiDRA6mRsSk7gYs87koglG5CpuKYi0NDogqWUgJP9QDdap2R0moJzWhby7ed
-HO9gXCnrHqSNnyhR0Q4GpgsjVkEE/CN+oDzamFgNhQ==
-=n3CU
+wsDcBAEBCAAQBQJb/KKZCRA6kfOOqDGW3QAA+hwMABlW5E1IL0H+JhUuE5NDo0J0
+7jrLTcfx1QWG/eIzZ0MRTRRX6tFJ28j+0/e2gvK3gIzZ1+hMl6c06yXZWC+yhD9g
+csqlrXfUe9KyVhWCW+e+n4MTzX5sBlWcWJtnkhzmfxtiwvXLdUfpB4ko0KyHUtqu
+e1jtL29OLCH9KgOfFwUYTSzg7PnVKOA5Aa7NjzWYz+i6j4HZkoHaKEuwfRYRO1E6
+5nPivCCt/yHAH3/CWMLooBTNL4RYaSr3GqBWUPX5roIzW+DftK1JtVUeYqiubM1S
+k5ap2CFa+rl1kvdTWi8+xGK5qMC6rc0ra7JcZkuISzS7moL1bsiEwCWLmxdBArCb
+xb5d7pgv/17ZFGxVJUOiSJvrbrmwEftlbEAGHLRPTfIxImnepu/3LkPkVd4zVJBR
+H61C6HpGFuyS69Ka1DO2v5C9CD54o2syHbwtCdlRRG8K3VGp4lrrDVJWEBwB0ri3
+TcgeKuhEnO10pmhneapXrc/Ii4lTttBgmENOflYeIw==
+=gZ19
 -----END PGP SIGNATURE-----

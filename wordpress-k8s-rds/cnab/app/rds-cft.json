@@ -1,0 +1,163 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Template for a public RDS instance exposed in the default VPC",
+  "Metadata": {
+    "AWS::CloudFormation::Interface": {
+      "ParameterGroups": [
+        {
+          "Label": {
+            "default": "Database Configuration"
+          },
+          "Parameters": [
+            "DatabasePassword",
+            "DatabaseInstanceType",
+            "DatabaseAllocatedStorage",
+            "DatabaseBackupRetentionPeriod"
+          ]
+        }
+      ],
+      "ParameterLabels": {
+        "DatabasePassword": {
+          "default": "Database root password"
+        },
+        "DatabaseInstanceType": {
+          "default": "Database instance type"
+        },
+        "DatabaseAllocatedStorage": {
+          "default": "Database allocated storage"
+        },
+        "DatabaseBackupRetentionPeriod": {
+          "default": "Database backup retention"
+        }
+      }
+    }
+  },
+  "Parameters": {
+    "DatabasePassword": {
+      "Description": "Set the root password for the database. Pick a strong alphanumeric password and store the value somewhere safe.",
+      "Type": "String",
+      "MinLength": "8",
+      "AllowedPattern": "^[a-zA-Z0-9]*$",
+      "ConstraintDescription": "You must set an alphanumeric database root password that is at least 8 characters.",
+      "NoEcho": "true"
+    },
+    "DatabaseInstanceType": {
+      "Description": "Select the instance type for the instance",
+      "Type": "String",
+      "Default": "db.t2.small",
+      "AllowedValues": [
+        "db.m4.large",
+        "db.m4.xlarge",
+        "db.m4.2xlarge",
+        "db.m4.4xlarge",
+        "db.m4.10xlarge",
+        "db.m4.16xlarge",
+        "db.m3.medium",
+        "db.m3.large",
+        "db.m3.xlarge",
+        "db.m3.2xlarge",
+        "db.r4.large",
+        "db.r4.xlarge",
+        "db.r4.2xlarge",
+        "db.r4.4xlarge",
+        "db.r4.8xlarge",
+        "db.r4.16xlarge",
+        "db.r3.large",
+        "db.r3.xlarge",
+        "db.r3.2xlarge",
+        "db.r3.4xlarge",
+        "db.r3.8xlarge",
+        "db.t2.micro",
+        "db.t2.small",
+        "db.t2.medium",
+        "db.t2.large",
+        "db.t2.xlarge",
+        "db.t2.2xlarge"
+      ]
+    },
+    "DatabaseAllocatedStorage": {
+      "Description": "Database allocated storage in GB. This must be at least 20 GB.",
+      "Type": "Number",
+      "MinValue": "20",
+      "Default": "20",
+      "ConstraintDescription": "Database allocated storage must be at least 20 GB"
+    },
+    "DatabaseBackupRetentionPeriod": {
+      "Description": "Number of days for which backups are retained ; setting to 0 disabled backups ; any positive value enables backups",
+      "Type": "Number",
+      "MinValue": "0",
+      "MaxValue": "35",
+      "Default": "1",
+      "ConstraintDescription": "Database backup retention period must be between 0 and 35 days"
+    }
+  },
+  "Conditions": {
+    "AlwaysTrue": {
+      "Fn::Equals": [
+        true,
+        true
+      ]
+    }
+  },
+  "Mappings": {
+    "DatabaseConfig": {
+      "Primary": {
+        "DBName": "app_db",
+        "Engine": "mysql",
+        "EngineVersion": "5.7.19",
+        "MasterUsername": "root",
+        "Port": "3306"
+      }
+    }
+  },
+  "Outputs": {
+    "PublicDnsName": {
+      "Description": "RDS database public DNS",
+      "Value": {  "Fn::GetAtt" : [ "Database", "Endpoint.Address" ] }
+    },
+    "DatabasePort": {
+      "Description": "RDS database port",
+      "Value": {  "Fn::GetAtt" : [ "Database", "Endpoint.Port" ] }
+    }
+  },
+  "Resources": {
+    "DatabaseSecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Security Group for the database",
+        "SecurityGroupIngress": [
+          {
+            "IpProtocol": "tcp",
+            "FromPort": "3306",
+            "ToPort": "3306",
+            "CidrIp": "0.0.0.0/0"
+          }
+        ]
+      }
+    },
+    "Database": {
+      "Type": "AWS::RDS::DBInstance",
+      "Description": "Database",
+      "Properties": {
+        "Tags": [
+          {
+            "Value": {
+              "Ref": "AWS::StackName"
+            },
+            "Key": "Application"
+          }
+        ],
+        "AllocatedStorage": { "Ref": "DatabaseAllocatedStorage" },
+        "DBInstanceClass": { "Ref": "DatabaseInstanceType" },
+        "DBName": { "Fn::FindInMap": ["DatabaseConfig", "Primary", "DBName"] },
+        "Engine": { "Fn::FindInMap": ["DatabaseConfig", "Primary", "Engine"] },
+        "EngineVersion": { "Fn::FindInMap": ["DatabaseConfig", "Primary", "EngineVersion"] },
+        "MasterUsername": { "Fn::FindInMap": ["DatabaseConfig", "Primary", "MasterUsername"] },
+        "MasterUserPassword": { "Ref": "DatabasePassword" },
+        "BackupRetentionPeriod": { "Ref": "DatabaseBackupRetentionPeriod" },
+        "PubliclyAccessible": "true",
+        "VPCSecurityGroups" : [ { "Fn::GetAtt": [ "DatabaseSecurityGroup", "GroupId" ] } ]
+      }
+    }
+  }
+}
