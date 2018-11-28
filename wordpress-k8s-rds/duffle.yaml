@@ -15,14 +15,14 @@ parameters:
     defaultValue: us-west-2
     destination:
       env: AWS_DEFAULT_REGION
-  application-domain:
+  app-domain:
     type: string
     defaultValue: ""
     destination:
       env: APP_DOMAIN
     metadata:
       description: The URL in which we want to expose the Wordpress instance
-  application-tls:
+  app-tls:
     type: boolean
     defaultValue: false
     destination:

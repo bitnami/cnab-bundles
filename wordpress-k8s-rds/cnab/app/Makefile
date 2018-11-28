@@ -9,7 +9,7 @@ CNAB_P_HELM_OPTIONS ?= # --dry-run
 # Generate a password if not provided
 ifndef DATABASE_PASSWORD
 	# Autogenerate database password, alphanumeric 10 chars (RDS does not support symbols)
-	DTABASE_PASSWORD := $(shell cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1)
+	DATABASE_PASSWORD := $(shell cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1)
 endif
 
 ifdef APP_DOMAIN

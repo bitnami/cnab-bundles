@@ -8,12 +8,12 @@ Hash: SHA256
   "invocationImages": [
     {
       "imageType": "docker",
-      "image": "gcr.io/bitnami-images/wordpress-k8s-rds-cnab:ff0719245eb7b2a3e648cc66f31fbcdc8152f891"
+      "image": "gcr.io/bitnami-images/wordpress-k8s-rds-cnab:61c854767225976109437804c4bd79da3d8eebd3"
     }
   ],
   "images": [],
   "parameters": {
-    "application-url": {
+    "app-domain": {
       "type": "string",
       "defaultValue": "",
       "required": false,
@@ -22,7 +22,19 @@ Hash: SHA256
       },
       "destination": {
         "path": "",
-        "env": "APP_URL"
+        "env": "APP_DOMAIN"
+      }
+    },
+    "app-tls": {
+      "type": "boolean",
+      "defaultValue": false,
+      "required": false,
+      "metadata": {
+        "description": "Set to true to add the required annotations for cert-manager"
+      },
+      "destination": {
+        "path": "",
+        "env": "APP_TLS"
       }
     },
     "aws-default-region": {
@@ -65,14 +77,14 @@ Hash: SHA256
 }
 -----BEGIN PGP SIGNATURE-----
 
-wsDcBAEBCAAQBQJb/rguCRA6kfOOqDGW3QAAdUkMADLjMaho3hEXg7JMkthgf8JS
-88pXs+vJ2HwrwitiNqhza9YK4QInqbrQNdLaiYMonj3FUZLatm3bF3OOgDHt9RbV
-JHEZQoRc8+2rryj/fCHpDhGpeYQx52GrmLA7Wqw9uL3OOBh0R/0Hku8IQCJrb8LU
-ojrJsSX+FmMyv/N0OdDpa5FJAWp7r4U0MfuRHVew4rC+Rc7v9hQ+lJY0NCeJaV1D
-mH/Umt7rLFbv7Tp5ulwT0dY72Q/nhLCNofpL4sc7ZGHwoX1/d0+yscp7QvvKKDar
-LGTkSbokMM6z+Nj9g5Z/yFXj80NA3k1oUZ3r8q+51eZYWOGsq6xO8LVqeS+9sam4
-rfiJCNLSDt/VRRTLTwY8x4MDXaZF0NZuNfF2BMrkIZxz4/V1iNbnNboSLH9symv0
-rkN+jOTcS+hLjdKVci+L2sfo2NiK+ZoR6jB6Oc3i2dA+lAPzgMGKuHd+Onyp5QUe
-EjpypGPlQtkqgdxjHZ4AyTeO/aETn5gxX4G6KkouCg==
-=3S85
+wsDcBAEBCAAQBQJb/ssICRA6kfOOqDGW3QAA++8MALsCfRgiL+Kj5OWkP33T9uwl
+sxaB5oyStohGazFpRgYAC66lXFXFHdGJBJIB9ShSHJEttbvgDjgg/lvuiYnr3GQz
+Athvabn/mI2aMidStGjVx6aSutZ+hvcUNts4ARnThGNKZxzKY71X7MeuybFT4RoM
+o4sh41Wmp+1EjEwm8CdhtzVjC9ycn+X1tcW9Dn49piOF0lWqjLSdLyHzbg4VXTpL
+4GH+etc4ey11X8WRi1N9e/sNhEnH6QjJdHO7+LbrBVlt/hjxdMUcPBEN23xbxKqv
+7wMr0a/PyGn68rt1h1yEOLwyKewwedFjqvnn8KYwtJt1I7fxE0pF+EenDZ3fvoNK
+hfA38FEUih6HsKLBrSd6O1jIN5VmtFaeteSH50ePn8ApS5okseNaApl8Rra2kdMZ
+ILJisVgiV77rQnqtdmgnn6AFVkvmzSrRMi/tOBhfwcI/toFDdxkVOnZ3RvlihtG0
+exkXh/hi7dvFWPzuoBgeKGAuQOCPOg3h0xNLYlLJ5g==
+=g9X1
 -----END PGP SIGNATURE-----
