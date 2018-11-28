@@ -8,11 +8,23 @@ Hash: SHA256
   "invocationImages": [
     {
       "imageType": "docker",
-      "image": "gcr.io/bitnami-images/wordpress-k8s-rds-cnab:d42c72051e8050c6a0f6948706aa60b91cd33b02"
+      "image": "gcr.io/bitnami-images/wordpress-k8s-rds-cnab:ff0719245eb7b2a3e648cc66f31fbcdc8152f891"
     }
   ],
   "images": [],
   "parameters": {
+    "application-url": {
+      "type": "string",
+      "defaultValue": "",
+      "required": false,
+      "metadata": {
+        "description": "The URL in which we want to expose the Wordpress instance"
+      },
+      "destination": {
+        "path": "",
+        "env": "APP_URL"
+      }
+    },
     "aws-default-region": {
       "type": "string",
       "defaultValue": "us-west-2",
@@ -21,6 +33,18 @@ Hash: SHA256
       "destination": {
         "path": "",
         "env": "AWS_DEFAULT_REGION"
+      }
+    },
+    "database-password": {
+      "type": "string",
+      "defaultValue": "",
+      "required": false,
+      "metadata": {
+        "description": "If not set, a randomly generated password will be used }"
+      },
+      "destination": {
+        "path": "",
+        "env": "DATABASE_PASSWORD"
       }
     }
   },
@@ -41,14 +65,14 @@ Hash: SHA256
 }
 -----BEGIN PGP SIGNATURE-----
 
-wsDcBAEBCAAQBQJb/eADCRA6kfOOqDGW3QAANUEMALC4aoDXkYJuWeTqzKDs8nL4
-6i/QMQPbXVE//9wr/cMrtdKoUeFv3GjOHrtBwvwyL44WCyoVsFD9fCsuqwDr47UO
-EFHqoFOTQrFftPYSmnManMHxoeeImjzQfscLf/rpasyGSiC7HMGcFfzgyZjGMbjO
-jDTFDOb1d15g0QCsce5QDla2mz0yi4wqhzetDqngNykpmIGBYbko38xOoNjpeUt6
-VNPyVQ0FZ4lqORThu+m2k8KxjRr7SuvffRi7apM30NSd8Qqz6IUkQP3bEg3Tov0P
-o8drJx3ypLcIIhnXoL5ZNwUVgqv8rHYS3LTUCgKYzryN0a57FCKLhWOVdfOO3kG8
-rS5jh3EQbImQDzbm9DzMt1bTp6cg+a3zGvHRmLbjrkmwWcIugLDkNDZIfHg75mYV
-9gVYTajlEEnaknieNHRZdtqSDnXPwdBIpHqh0Om+Fdy9bKo9w+K825B+q6owx4xs
-lFHU9UpzTdEcC9fIdkIJNBiBzmESmbskM/pn5AHWWg==
-=wDkH
+wsDcBAEBCAAQBQJb/rguCRA6kfOOqDGW3QAAdUkMADLjMaho3hEXg7JMkthgf8JS
+88pXs+vJ2HwrwitiNqhza9YK4QInqbrQNdLaiYMonj3FUZLatm3bF3OOgDHt9RbV
+JHEZQoRc8+2rryj/fCHpDhGpeYQx52GrmLA7Wqw9uL3OOBh0R/0Hku8IQCJrb8LU
+ojrJsSX+FmMyv/N0OdDpa5FJAWp7r4U0MfuRHVew4rC+Rc7v9hQ+lJY0NCeJaV1D
+mH/Umt7rLFbv7Tp5ulwT0dY72Q/nhLCNofpL4sc7ZGHwoX1/d0+yscp7QvvKKDar
+LGTkSbokMM6z+Nj9g5Z/yFXj80NA3k1oUZ3r8q+51eZYWOGsq6xO8LVqeS+9sam4
+rfiJCNLSDt/VRRTLTwY8x4MDXaZF0NZuNfF2BMrkIZxz4/V1iNbnNboSLH9symv0
+rkN+jOTcS+hLjdKVci+L2sfo2NiK+ZoR6jB6Oc3i2dA+lAPzgMGKuHd+Onyp5QUe
+EjpypGPlQtkqgdxjHZ4AyTeO/aETn5gxX4G6KkouCg==
+=3S85
 -----END PGP SIGNATURE-----
