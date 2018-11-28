@@ -29,13 +29,13 @@ provision() {
     local stack_status="$(echo ${stack_info} | jq -r .StackStatus)"
 
     # TODO, use regexp
-    if [[ "${STACK_SUCCESS_STATUSES[@]}" =~ "${stack_status}" ]]; then
+    if [[ "${STACK_FAILED_STATUSES[@]}" =~ "${stack_status}" ]]; then
+      echo "===> Error creating the database. Status: ${stack_status}"
+      exit 1
+    elif [[ "${STACK_SUCCESS_STATUSES[@]}" =~ "${stack_status}" ]]; then
       echo STATUS: ${stack_status}
       echo "===> RDS database ready!"
       break
-    elif [[ "${STACK_FAILED_STATUSES[@]}" =~ "${stack_status}" ]]; then
-      echo "===> Error creating the database. Status: ${stack_status}"
-      exit 1
     fi
 
     tries=$[${tries}+1]

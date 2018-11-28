@@ -15,6 +15,27 @@ parameters:
     defaultValue: us-west-2
     destination:
       env: AWS_DEFAULT_REGION
+  app-domain:
+    type: string
+    defaultValue: ""
+    destination:
+      env: APP_DOMAIN
+    metadata:
+      description: The URL in which we want to expose the Wordpress instance
+  app-tls:
+    type: boolean
+    defaultValue: false
+    destination:
+      env: APP_TLS
+    metadata:
+      description: Set to true to add the required annotations for cert-manager
+  database-password:
+    type: string
+    defaultValue: ""
+    destination:
+      env: DATABASE_PASSWORD
+    metadata:
+      description: If not set, a randomly generated password will be set
 credentials:
   kubeconfig:
     path: "/root/.kube/config"

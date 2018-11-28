@@ -8,11 +8,35 @@ Hash: SHA256
   "invocationImages": [
     {
       "imageType": "docker",
-      "image": "gcr.io/bitnami-images/wordpress-k8s-rds-cnab:d42c72051e8050c6a0f6948706aa60b91cd33b02"
+      "image": "gcr.io/bitnami-images/wordpress-k8s-rds-cnab:61c854767225976109437804c4bd79da3d8eebd3"
     }
   ],
   "images": [],
   "parameters": {
+    "app-domain": {
+      "type": "string",
+      "defaultValue": "",
+      "required": false,
+      "metadata": {
+        "description": "The URL in which we want to expose the Wordpress instance"
+      },
+      "destination": {
+        "path": "",
+        "env": "APP_DOMAIN"
+      }
+    },
+    "app-tls": {
+      "type": "boolean",
+      "defaultValue": false,
+      "required": false,
+      "metadata": {
+        "description": "Set to true to add the required annotations for cert-manager"
+      },
+      "destination": {
+        "path": "",
+        "env": "APP_TLS"
+      }
+    },
     "aws-default-region": {
       "type": "string",
       "defaultValue": "us-west-2",
@@ -21,6 +45,18 @@ Hash: SHA256
       "destination": {
         "path": "",
         "env": "AWS_DEFAULT_REGION"
+      }
+    },
+    "database-password": {
+      "type": "string",
+      "defaultValue": "",
+      "required": false,
+      "metadata": {
+        "description": "If not set, a randomly generated password will be used }"
+      },
+      "destination": {
+        "path": "",
+        "env": "DATABASE_PASSWORD"
       }
     }
   },
@@ -41,14 +77,14 @@ Hash: SHA256
 }
 -----BEGIN PGP SIGNATURE-----
 
-wsDcBAEBCAAQBQJb/eADCRA6kfOOqDGW3QAANUEMALC4aoDXkYJuWeTqzKDs8nL4
-6i/QMQPbXVE//9wr/cMrtdKoUeFv3GjOHrtBwvwyL44WCyoVsFD9fCsuqwDr47UO
-EFHqoFOTQrFftPYSmnManMHxoeeImjzQfscLf/rpasyGSiC7HMGcFfzgyZjGMbjO
-jDTFDOb1d15g0QCsce5QDla2mz0yi4wqhzetDqngNykpmIGBYbko38xOoNjpeUt6
-VNPyVQ0FZ4lqORThu+m2k8KxjRr7SuvffRi7apM30NSd8Qqz6IUkQP3bEg3Tov0P
-o8drJx3ypLcIIhnXoL5ZNwUVgqv8rHYS3LTUCgKYzryN0a57FCKLhWOVdfOO3kG8
-rS5jh3EQbImQDzbm9DzMt1bTp6cg+a3zGvHRmLbjrkmwWcIugLDkNDZIfHg75mYV
-9gVYTajlEEnaknieNHRZdtqSDnXPwdBIpHqh0Om+Fdy9bKo9w+K825B+q6owx4xs
-lFHU9UpzTdEcC9fIdkIJNBiBzmESmbskM/pn5AHWWg==
-=wDkH
+wsDcBAEBCAAQBQJb/ssICRA6kfOOqDGW3QAA++8MALsCfRgiL+Kj5OWkP33T9uwl
+sxaB5oyStohGazFpRgYAC66lXFXFHdGJBJIB9ShSHJEttbvgDjgg/lvuiYnr3GQz
+Athvabn/mI2aMidStGjVx6aSutZ+hvcUNts4ARnThGNKZxzKY71X7MeuybFT4RoM
+o4sh41Wmp+1EjEwm8CdhtzVjC9ycn+X1tcW9Dn49piOF0lWqjLSdLyHzbg4VXTpL
+4GH+etc4ey11X8WRi1N9e/sNhEnH6QjJdHO7+LbrBVlt/hjxdMUcPBEN23xbxKqv
+7wMr0a/PyGn68rt1h1yEOLwyKewwedFjqvnn8KYwtJt1I7fxE0pF+EenDZ3fvoNK
+hfA38FEUih6HsKLBrSd6O1jIN5VmtFaeteSH50ePn8ApS5okseNaApl8Rra2kdMZ
+ILJisVgiV77rQnqtdmgnn6AFVkvmzSrRMi/tOBhfwcI/toFDdxkVOnZ3RvlihtG0
+exkXh/hi7dvFWPzuoBgeKGAuQOCPOg3h0xNLYlLJ5g==
+=g9X1
 -----END PGP SIGNATURE-----
