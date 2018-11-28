@@ -1,6 +1,5 @@
 # Source: https://github.com/deislabs/bundles/blob/master/k8sbase/cnab/app/Makefile
 SHELL := /bin/bash
-CNAB_ACTION ?= status
 CNAB_INSTALLATION_NAME ?= test
 CHART_NAME := wordpress
 CNAB_P_HELM_OPTIONS ?= # --dry-run
