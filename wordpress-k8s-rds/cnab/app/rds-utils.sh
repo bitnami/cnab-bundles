@@ -15,15 +15,17 @@ provision() {
   if ! ${SKIP_DB_CREATION} ; then
     echo "===> Deploying RDS database"
     aws cloudformation create-stack --stack-name ${STACK_NAME} --template-body file://rds-cft.json \
-      --parameters ParameterKey=DatabasePassword,ParameterValue=${DATABASE_PASSWORD} > /dev/null
+      --parameters ParameterKey=DatabasePassword,ParameterValue=${DATABASE_PASSWORD} \
+      ParameterKey=DatabaseUsername,ParameterValue=bn_wordpress \
+      ParameterKey=DatabaseName,ParameterValue=bitnami_wordpress > /dev/null
   fi
 
-  local retries=0
+  local tries=0
   stack_info=""
 
-  until [ ${retries} -ge 50 ]
+  until [ ${tries} -ge 50 ]
   do
-    local stack_info="$(aws cloudformation describe-stacks --stack-name ${STACK_NAME} --max-items 1 | jq -r .Stacks[0])"
+    local stack_info="$(aws cloudformation describe-stacks --stack-name ${STACK_NAME} --max-items 1 | jq .Stacks[0])"
     local stack_status="$(echo ${stack_info} | jq -r .StackStatus)"
 
     # TODO, use regexp
@@ -36,14 +38,16 @@ provision() {
       exit 1
     fi
 
-    retries=$[${retries}+1]
+    tries=$[${tries}+1]
     echo "===> Waiting for the RDS database to be ready, please be patient. Status: ${stack_status}"
     sleep 30
   done
 
-  local RDS_DNS=$(echo "${stack_info}" | jq '.Outputs[] | select(.OutputKey == "PublicDnsName").OutputValue')
-  echo "===> Database Hostname: ${RDS_DNS}"
-  echo ${RDS_DNS}
+  local DATABASE_HOSTNAME=$(echo "${stack_info}" | jq -r '.Outputs[] | select(.OutputKey == "PublicDnsName").OutputValue')
+  echo "===> Database Hostname: ${DATABASE_HOSTNAME}"
+
+  # Store it in a file
+  echo ${DATABASE_HOSTNAME} > .rds_hostname
 }
 
 # Deprovisions the RDS database by deleting the cloud formation stack
