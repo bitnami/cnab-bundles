@@ -2,34 +2,32 @@
 SHELL := /bin/bash
 CNAB_ACTION ?= status
 CNAB_INSTALLATION_NAME ?= wordpress-test
-
+CHART_NAME := wordpress
 CNAB_P_HELM_OPTIONS ?= # --dry-run --debug
-# Autogenerate database password, alphanumeric 10 chars
-DATABASE_PASSWORD ?= $$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1)
 
+# Autogenerate database password, alphanumeric 10 chars (RDS does not support symbols)
+DATABASE_PASSWORD := $(shell cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1)
+
+# TODO, do not rely on the hostname stored in a filename
 install: rds_provision
-	@for chart in $$(ls charts); do [[ ! -d charts/$$chart ]] || \
-		helm install $(CNAB_P_HELM_OPTIONS) -n $(CNAB_INSTALLATION_NAME)-$$chart charts/$$chart ;\
-	done
-	@echo All charts installed
+	helm install $(CNAB_P_HELM_OPTIONS) -n $(CNAB_INSTALLATION_NAME)-$(CHART_NAME) charts/$(CHART_NAME) \
+	  --set mariadb.enabled=false,externalDatabase.host=$(shell cat .rds_hostname),externalDatabase.password=$(DATABASE_PASSWORD)
 
 uninstall: rds_deprovision
-	@for chart in $$(ls charts); do [[ ! -d charts/$$chart ]] || \
-		helm delete $(CNAB_P_HELM_OPTIONS) $(CNAB_INSTALLATION_NAME)-$$chart ;\
-	done
+	helm delete $(CNAB_P_HELM_OPTIONS) $(CNAB_INSTALLATION_NAME)-$(CHART_NAME) --purge
 
 upgrade:
-	@for chart in $$(ls charts); do [[ ! -d charts/$$chart ]] || \
-		helm upgrade $(CNAB_P_HELM_OPTIONS) $(CNAB_INSTALLATION_NAME)-$$chart charts/$$chart ;\
-	done
+	helm upgrade $(CNAB_P_HELM_OPTIONS) $(CNAB_INSTALLATION_NAME)-$(CHART_NAME) charts/$(CHART_NAME)
 
 status:
-	@for chart in $$(ls charts); do [[ ! -d charts/$$chart ]] || \
-		helm status $(CNAB_P_HELM_OPTIONS) $(CNAB_INSTALLATION_NAME)-$$chart ;\
-	done
+	helm status $(CNAB_P_HELM_OPTIONS) $(CNAB_INSTALLATION_NAME)-$(CHART_NAME)
 
-rds_provision:
-	source rds-utils.sh && STACK_NAME=$(CNAB_INSTALLATION_NAME) DATABASE_PASSWORD=$(DATABASE_PASSWORD) provision
+rds_provision: .rds_hostname
+
+# provision will create the .rds_hostname file
+.rds_hostname:
+	@source rds-utils.sh \
+		&& STACK_NAME=$(CNAB_INSTALLATION_NAME) SKIP_DB_CREATION=false DATABASE_PASSWORD=$(DATABASE_PASSWORD) provision
 
 rds_deprovision:
 	source rds-utils.sh && STACK_NAME=$(CNAB_INSTALLATION_NAME) deprovision

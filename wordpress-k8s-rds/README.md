@@ -36,9 +36,8 @@ $ duffle uninstall|status|upgrade -c wordpress-creds my_release
 $ duffle build .
 ```
 
-Due to this bug https://github.com/deis/duffle/issues/337, after building the bundle we can not just `inspect it` but there is a workaround that finds the correct bundle and moves it to the working directory.
 
 ```bash
 # Export the generated bundle
-$ cp ~/.duffle/bundles/$(grep wordpress -A1 ~/.duffle/repositories.json | tail -1 | awk -F': ' '{print $2}' | awk -F'\"' '{print $2}') ./bundle.cnab
+duffle inspect wordpress-k8s-rds:0.1.0 --raw > ./bundle.cnab
 ```
