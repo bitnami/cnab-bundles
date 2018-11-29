@@ -23,7 +23,7 @@ parameters:
     metadata:
       description: The URL in which we want to expose the Wordpress instance
   app-tls:
-    type: boolean
+    type: bool
     defaultValue: false
     destination:
       env: APP_TLS
