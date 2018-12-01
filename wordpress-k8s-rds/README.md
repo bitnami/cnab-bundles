@@ -1,4 +1,4 @@
-# WordPress on k8s + RDS database CNAB bundle
+# WordPress on k8s + RDS database
 
 [WordPress](https://wordpress.org/) is one of the most versatile open source content management systems on the market. A publishing platform for building blogs and websites.
 
@@ -12,7 +12,7 @@ $ duffle install my-wordpress -c wordpress-creds -f ./bundle.cnab
 
 ## Introduction
 
-This [CNAB bundle](https://github.com/deislabs/cnab-spec) bootstraps a Mysql RDS database as well as a [WordPress](https://github.com/bitnami/bitnami-docker-wordpress) deployment on a [Kubernetes](http://kubernetes.io) cluster.
+This [CNAB bundle](https://github.com/deislabs/cnab-spec) bootstraps a MySQL RDS database as well as a [WordPress](https://github.com/bitnami/bitnami-docker-wordpress) deployment on a [Kubernetes](http://kubernetes.io) cluster.
 
 Under the hood, this package provisions the RDS database by using a Cloud Formation template and deploys Wordpress by relying on the Bitnami [Wordpress Helm chart](https://github.com/helm/charts/tree/master/stable/wordpress).
 
