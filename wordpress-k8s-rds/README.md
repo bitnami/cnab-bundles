@@ -1,34 +1,109 @@
-## USAGE
+# WordPress on k8s + RDS database CNAB bundle
 
-Import the verification key
+[WordPress](https://wordpress.org/) is one of the most versatile open source content management systems on the market. A publishing platform for building blogs and websites.
 
-NOTE: Alternatively you can attach the `--insecure` flag to every single command
+[Amazon Relational Database Service](https://aws.amazon.com/rds) (Amazon RDS) is a web service that makes it easier to set up, operate, and scale a relational database in the cloud
+
+## TL;DR;
+
+```console
+$ duffle install my-wordpress -c wordpress-creds -f ./bundle.cnab
+```
+
+## Introduction
+
+This [CNAB bundle](https://github.com/deislabs/cnab-spec) bootstraps a Mysql RDS database as well as a [WordPress](https://github.com/bitnami/bitnami-docker-wordpress) deployment on a [Kubernetes](http://kubernetes.io) cluster.
+
+Under the hood, this package provisions the RDS database by using a Cloud Formation template and deploys Wordpress by relying on the Bitnami [Wordpress Helm chart](https://github.com/helm/charts/tree/master/stable/wordpress).
+
+## Prerequisites
+
+* AWS account with permissions to provision RDS databases and deploy Cloud Formation stacks.
+* Kubernetes 1.4+
+* [Tiller](https://docs.helm.sh/install/#installing-tiller) installed in the Kubernetes cluster
+
+
+## Installing the CNAB Bundle
+
+In order to manage the bundle, we are going to use a command line tool called [Duffle](https://github.com/deislabs/duffle), please ensure that you [have installed](https://github.com/deislabs/duffle/releases) its latest version before continue.
+
+
+### Import Signing Key
+
+CNAB Bundles, by default, are signed by their provided, so importing a verification key is required to verify the integrity and source of the package.
+
+> **Tip**: Alternatively you can append the `--insecure` flag to every single command
+
 
 ```bash
-# Import key for signature checking
+# verification-public.key can be found in the git repo, download it and then run:
 $ duffle key add verification-public.key
 ```
 
+### Define Credentials
 
-Generate and configure a credential set 
+
+Some credentials from your environment need to be supplied to the bundle. Specifically, AWS credentials are required to manage Cloud Formation and RDS databases and a Kubernetes `kube/config` file is required to deploy and manage applications in Kubernetes.  
+
+First, generate a credentials file:
+
 
 ```bash
 $ duffle creds generate wordpress-creds -f ./bundle.cnab
 ```
 
-Install Wordpress in k8s
 
+This will create a file in ~/.duffle/credentials/wordpress-creds.yaml showing the credentials needed with empty values.
+
+You can either fill the values in directly, or edit them by typing:
+
+```bash
+$ duffle creds edit wordpress-creds
 ```
-$ duffle install -c wordpress-creds my_release -f ./bundle.cnab
+
+### Parameters
+
+The following table lists the configurable parameters of the WordPress CNAB bundle and their default values.
+
+|            Parameter             |                Description                 |                         Default                         |
+|----------------------------------|--------------------------------------------|---------------------------------------------------------|
+| `database-password`           | Database password, 8 alphanumeric chars minimum | `random alphanumeric string`|
+| `aws-default-region`          | AWS region where the RDS database will be provisioned | `us-west-2` |
+|`app-domain`|The domain used to expose the Wordpress instance, if set it will configure a k8s ingress resource|`nil`|
+|`app-tls`|TLS configuration for the `app-domain` ingress including the required `cert-manager` annotations|`false`|
+
+
+### Usage examples
+
+Installation with default settings, random database password and application expose via loadBalancer IP address
+
+```bash
+$ duffle install my_release -c wordpress-creds -f ./bundle.cnab
+```
+
+Installation with specific database password and application URL + TLS configured
+
+```bash
+$ duffle install my_release -c wordpress-creds --set app-domain=wordpress.mydomain.com --set app-tls=true -f ./bundle.cnab
 ```
 
 You can also update, uninstall or get the status of a release
 
 ```
-$ duffle uninstall|status|upgrade -c wordpress-creds my_release
+$ duffle uninstall|status|upgrade my_release -c wordpress-creds
 ```
 
-## BUILD
+### Bitnami Kubernetes Production Runtime integration
+
+This bundle is compatible with [Bitnami Kubernetes Production Runtime](https://github.com/bitnami/kube-prod-runtime) which provides logging, monitoring, certificate and public DNS management.  
+
+Once installed, it will take advantage of the monitoring and logging capabilities automatically but in order to let BKPR manage the DNS and TLS certificates you need to deploy the instance with the `app-domain` and `app-tls` parameters.
+
+```bash
+$ duffle install my_release -c wordpress-creds --set app-domain=wordpress.kubeprod-domain.com --set app-tls=true -f ./bundle.cnab
+```
+
+## Development
 
 
 ```bash
@@ -39,5 +114,5 @@ $ duffle build .
 
 ```bash
 # Export the generated bundle
-duffle inspect wordpress-k8s-rds:0.1.0 --raw > ./bundle.cnab
+duffle inspect wordpress-k8s-rds:devel --raw > ./bundle.cnab
 ```
