@@ -15,13 +15,15 @@ parameters:
     defaultValue: us-west-2
     destination:
       env: AWS_DEFAULT_REGION
+    metadata:
+      description: AWS region where the RDS database will be provisioned
   app-domain:
     type: string
     defaultValue: ""
     destination:
       env: APP_DOMAIN
     metadata:
-      description: The URL in which we want to expose the Wordpress instance
+      description: The domain used to expose the Wordpress instance
   app-tls:
     type: bool
     defaultValue: false
@@ -35,7 +37,7 @@ parameters:
     destination:
       env: DATABASE_PASSWORD
     metadata:
-      description: If not set, a randomly generated password will be set
+      description: If not set, a randomly generated password will be used
 credentials:
   kubeconfig:
     path: "/root/.kube/config"
