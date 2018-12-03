@@ -3,9 +3,32 @@ set -eu -o pipefail
 
 ########################
 #
+# Misc helper functions
+#
+########################
+
+# Makes a naive validation of the provided credentials by
+# 1 - Checking that the client has access to a runner instance of Tiller
+# 2 - Validate that the AWS credentials are valid
+validate_credentials() {
+  log "Validating Kubernetes credentials and Tiller installation"
+  helm version > /dev/null || \
+    (log "Kubernetes and Tiller validation error" && exit 1)
+
+  log "Validating AWS credentials"
+  aws sts get-caller-identity > /dev/null || \
+    (log "Invalid AWS credentials" && exit 1)
+}
+
+log() {
+  echo -e "\033[0;33m$(date "+%H:%M:%S")\033[0;37m ==> $1."
+}
+
+########################
+#
 # RDS helper functions
 #
-#######################
+########################
 
 # Required args
 readonly STACK_SUCCESS_STATUSES=(CREATE_COMPLETE UPDATE_COMPLETE)
@@ -18,7 +41,7 @@ rds_provision() {
   SKIP_DB_CREATION=${SKIP_DB_CREATION:=false}
 
   if ! ${SKIP_DB_CREATION} ; then
-    echo "===> Deploying RDS database"
+    log "Deploying RDS database"
     aws cloudformation create-stack --stack-name ${STACK_NAME} --template-body file://rds-cft.json \
       --parameters ParameterKey=DatabasePassword,ParameterValue=${DATABASE_PASSWORD} \
       ParameterKey=DatabaseUsername,ParameterValue=bn_wordpress \
@@ -35,21 +58,20 @@ rds_provision() {
 
     # TODO, use regexp
     if [[ "${STACK_FAILED_STATUSES[@]}" =~ "${stack_status}" ]]; then
-      echo "===> Error creating the database. Status: ${stack_status}"
+      log "Error creating the database. Status: ${stack_status}"
       exit 1
     elif [[ "${STACK_SUCCESS_STATUSES[@]}" =~ "${stack_status}" ]]; then
-      echo STATUS: ${stack_status}
-      echo "===> RDS database ready!"
+      log "RDS database ready!"
       break
     fi
 
     tries=$[${tries}+1]
-    echo "===> Waiting for the RDS database to be ready, please be patient. Status: ${stack_status}"
+    log "Waiting for the RDS database to be ready, please be patient. Status: ${stack_status}"
     sleep 30
   done
 
   local DATABASE_HOSTNAME=$(echo "${stack_info}" | jq -r '.Outputs[] | select(.OutputKey == "PublicDnsName").OutputValue')
-  echo "===> Database Hostname: ${DATABASE_HOSTNAME}"
+  log "Database Hostname: ${DATABASE_HOSTNAME}"
 
   # Store it in a file
   echo ${DATABASE_HOSTNAME} > .rds_hostname
@@ -59,23 +81,3 @@ rds_provision() {
 rds_deprovision() {
   aws cloudformation delete-stack --stack-name ${STACK_NAME}
 }
-
-########################
-#
-# Misc helper functions
-#
-#######################
-
-# Makes a naive validation of the provided credentials by
-# 1 - Checking that the client has access to a runner instance of Tiller
-# 2 - Validate that the AWS credentials are valid
-validate_credentials() {
-  echo "===> Validating Kubernetes credentials and Tiller installation"
-  helm version > /dev/null || \
-    (echo "===> Kubernetes and Tiller validation error" && exit 1)
-
-  echo "===> Validating AWS credentials"
-  aws sts get-caller-identity > /dev/null || \
-    (echo "===> Invalid AWS credentials" && exit 1)
-}
-
