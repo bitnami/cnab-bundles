@@ -53,8 +53,9 @@ Hash: SHA256
       "type": "string",
       "defaultValue": "",
       "required": false,
+      "minLength": 10,
       "metadata": {
-        "description": "If not set, a randomly generated password will be used"
+        "description": "Database password (alphanumeric, 10 chars minimum). If not set, a randomly generated password will be used"
       },
       "destination": {
         "path": "",
@@ -79,14 +80,14 @@ Hash: SHA256
 }
 -----BEGIN PGP SIGNATURE-----
 
-wsDcBAEBCAAQBQJcBXvvCRA6kfOOqDGW3QAAp08MANQ0q1dVvO6C6pAymiQTDeyt
-QqRgDwKf7U8DjOnlEJZyi+0Ehh+QrfowAU6pF4RWx/ScyaSRTaWmuF561+P5OmSH
-UGeR7stHG3p2aJ5htnFENtsnSZ1sVZFMKxu9ci6DdrRF4t2Jr3Wpreml7+5wKU99
-TSNLtU6IN6S8JZQ6T9ar4CDmD//1cTam95x46I4rZ3pHyvKrr/4z9qG2CR9vPkyM
-RcKgt2oMiJ/sWkAUV5tn34oij+efD2w26fGqq3HhykMT0vgXBuZ1A1kWxAAKYAo/
-Q97JXiB89NCxLAGV8XVcjngKqkPnzxQFTyNnfHyUDci1t8fxNMwGkYZSkiSmnZsa
-73qw1WY0UiO/JdzCRODGkNpYkwfECe6kHNPfxXhvFyJA/T+YL7maijvrfACL90j0
-z00Z6wXDlMSMUHJZ87+PEfhBKlBK1nbVicjnCumNwMmCN3axIN2XnZ5Exj0zXlCp
-+WZC07M4sqR89qHyFQPU7S8bMzOD8wwuAEba+wmr7w==
-=9nhs
+wsDcBAEBCAAQBQJcBX4nCRA6kfOOqDGW3QAAcBYMAKs+QEtD0MA9koHykiK3Qs57
+7hSkpW7JnY/VRcpuOMWqhqDFvjaoIU0UjY/pibBs7ud/k3RvohjLJBD1Py56YATA
+QQVKwCOVY3m/El6mMFP48oxQ/cehCb03a+jlKvXO9My7cpIU1m/qFqps4MLfRU0Y
+8n2SzxxIwIBDfjLzx3Jo6fZoEvOenbcTVWEGCthTxn1s2MR9rw5z18LJCMx4iVA6
+ix55BVpTd8g/UN9//Zw3wTvy+1fr4fPvcUw0aawcqSxzVmLEK6YR1V3R8cG29e78
+w8nuwLeK7NzUwyE6tXhvPAp6QHKBgM7W4EKz6rQAI42uZqcDa0VdnxTvBmXN4d/S
+t9Z26rQpmGAeyoQ64q2lxu1PtrpHY52OFm7naDwjse2ssA4jJ4JjhVt9cOm0oPSg
+USOKjU6OptdwqxvkyPE7RBodHlPUSsrDF9lHsIjtNNxVAzyFb0CLtuU+a3bSYN9y
+ni0YH1uEKbBwJKC2bhCJbJUJqbcsmF3TS1fAPLosuA==
+=+Hq1
 -----END PGP SIGNATURE-----
