@@ -77,19 +77,19 @@ The following table lists the configurable parameters of the WordPress CNAB bund
 Installation with default settings, random database password and application expose via a LoadBalancer IP address
 
 ```bash
-$ duffle install my_release -c wordpress-creds -f ./bundle.cnab
+$ duffle install my-release -c wordpress-creds -f ./bundle.cnab
 ```
 
 Installation with specific database password and application URL + TLS configured
 
 ```bash
-$ duffle install my_release -c wordpress-creds --set app-domain=wordpress.mydomain.com --set app-tls=true -f ./bundle.cnab
+$ duffle install my-release -c wordpress-creds --set app-domain=wordpress.mydomain.com --set app-tls=true -f ./bundle.cnab
 ```
 
 You can also update, uninstall or get the status of a release
 
 ```
-$ duffle uninstall|status|upgrade my_release -c wordpress-creds
+$ duffle uninstall|status|upgrade my-release -c wordpress-creds
 ```
 
 ### Bitnami Kubernetes Production Runtime integration
@@ -99,7 +99,7 @@ This bundle is compatible with [Bitnami Kubernetes Production Runtime](https://g
 Once installed, it will take advantage of the monitoring and logging capabilities automatically but in order to let BKPR manage the DNS and TLS certificates you need to install this bundle setting the `app-domain` and `app-tls` parameters.
 
 ```bash
-$ duffle install my_release -c wordpress-creds --set app-domain=wordpress.kubeprod-domain.com --set app-tls=true -f ./bundle.cnab
+$ duffle install my-release -c wordpress-creds --set app-domain=wordpress.kubeprod-domain.com --set app-tls=true -f ./bundle.cnab
 ```
 
 ## Development
