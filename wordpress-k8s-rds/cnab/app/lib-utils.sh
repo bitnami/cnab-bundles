@@ -1,13 +1,18 @@
 #!/bin/bash
 set -eu -o pipefail
 
-#### Creates a cloud formation stack
+########################
+#
+# RDS helper functions
+#
+#######################
 
 # Required args
 readonly STACK_SUCCESS_STATUSES=(CREATE_COMPLETE UPDATE_COMPLETE)
 readonly STACK_FAILED_STATUSES=(CREATE_FAILED ROLLBACK_COMPLETE)
 
-provision() {
+#### Creates a cloud formation stack
+rds_provision() {
   STACK_NAME=${STACK_NAME:?}
   DATABASE_PASSWORD=${DATABASE_PASSWORD:?}
   SKIP_DB_CREATION=${SKIP_DB_CREATION:=false}
@@ -51,7 +56,26 @@ provision() {
 }
 
 # Deprovisions the RDS database by deleting the cloud formation stack
-# TODO: Wait until the stack is deleted
-deprovision() {
+rds_deprovision() {
   aws cloudformation delete-stack --stack-name ${STACK_NAME}
 }
+
+########################
+#
+# Misc helper functions
+#
+#######################
+
+# Makes a naive validation of the provided credentials by
+# 1 - Checking that the client has access to a runner instance of Tiller
+# 2 - Validate that the AWS credentials are valid
+validate_credentials() {
+  echo "===> Validating Kubernetes credentials and Tiller installation"
+  helm version > /dev/null || \
+    (echo "===> Kubernetes and Tiller validation error" && exit 1)
+
+  echo "===> Validating AWS credentials"
+  aws sts get-caller-identity > /dev/null || \
+    (echo "===> Invalid AWS credentials" && exit 1)
+}
+

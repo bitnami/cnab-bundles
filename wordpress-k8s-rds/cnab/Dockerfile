@@ -17,8 +17,6 @@ RUN install_packages ca-certificates wget make jq python python-pip python-setup
 # Initialize Helm and download Wordpress Chart
 RUN helm init -c
 
-# TODO: Install AWS Client
-
 # Pull wordpress chart
 # TODO: We might want to have the files baked in the repo, for now we do it this way to avoid duplication
 RUN helm fetch stable/wordpress --version ${CHART_VERSION} \
