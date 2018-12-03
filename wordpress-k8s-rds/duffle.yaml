@@ -1,6 +1,6 @@
 name: wordpress-k8s-rds
 version: 0.1.0
-description: Wordpress running in K8s connected to a provisioned RDS instance
+description: WordPress running in K8s connected to a provisioned RDS instance
 keywords: []
 maintainers: []
 components:
@@ -23,7 +23,7 @@ parameters:
     destination:
       env: APP_DOMAIN
     metadata:
-      description: The domain used to expose the Wordpress instance
+      description: The domain used to expose the WordPress instance
   app-tls:
     type: bool
     defaultValue: false

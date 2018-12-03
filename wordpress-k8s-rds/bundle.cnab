@@ -4,7 +4,7 @@ Hash: SHA256
 {
   "name": "wordpress-k8s-rds",
   "version": "0.1.0",
-  "description": "Wordpress running in K8s connected to a provisioned RDS instance",
+  "description": "WordPress running in K8s connected to a provisioned RDS instance",
   "invocationImages": [
     {
       "imageType": "docker",
@@ -18,7 +18,7 @@ Hash: SHA256
       "defaultValue": "",
       "required": false,
       "metadata": {
-        "description": "The domain used to expose the Wordpress instance"
+        "description": "The domain used to expose the WordPress instance"
       },
       "destination": {
         "path": "",
@@ -79,14 +79,14 @@ Hash: SHA256
 }
 -----BEGIN PGP SIGNATURE-----
 
-wsDcBAEBCAAQBQJcAeUPCRA6kfOOqDGW3QAAIJcMAL83MkXAlMzi3sbeWzjYcCFG
-dkRI6PDFs2Fwx6J5xVdv5C/2f6EwddbF+ZTW5YlPlUkQEQYadlDmvQMsCrCrYQMZ
-0sY3GAXdOfPq3MReURiIppDmS4s4wy+LjIiri4BtAyGNsS87nyTqQUp3PnhWayPh
-d5KHlPHESJNRJ8AzkrN67QAp7/SigfiE6ex3zTQddm/oKAcVQ+K/3B3sLz8IZV25
-NL5PHNlhC7fEYZjtU5RiQw35YYHfZEp53DzmJqNMpJNMrFmK3H+P3E4/mKH9AhjG
-BjJpywVjzK+geqJ7MLGN+Ci/FQVfxUldit8Kfc8P2HlP/TqAEQizu0Lnueh3dypp
-nEnQjSJMpAPu4lpoUoqKfqKH92P9m8qIQb3eJ/L32vj/daQRojKesAG7lLYVvW2m
-bDzmdpemeYrU2bII155DVytP1lY62sB+nlmAX4PYFeazdhBi9HD+NtyC5s3OXrO9
-DKRU+evNVh0SPGw+ZruPmTC0GNWT9LuUHvjf8om1nA==
-=oNF3
+wsDcBAEBCAAQBQJcBXvvCRA6kfOOqDGW3QAAp08MANQ0q1dVvO6C6pAymiQTDeyt
+QqRgDwKf7U8DjOnlEJZyi+0Ehh+QrfowAU6pF4RWx/ScyaSRTaWmuF561+P5OmSH
+UGeR7stHG3p2aJ5htnFENtsnSZ1sVZFMKxu9ci6DdrRF4t2Jr3Wpreml7+5wKU99
+TSNLtU6IN6S8JZQ6T9ar4CDmD//1cTam95x46I4rZ3pHyvKrr/4z9qG2CR9vPkyM
+RcKgt2oMiJ/sWkAUV5tn34oij+efD2w26fGqq3HhykMT0vgXBuZ1A1kWxAAKYAo/
+Q97JXiB89NCxLAGV8XVcjngKqkPnzxQFTyNnfHyUDci1t8fxNMwGkYZSkiSmnZsa
+73qw1WY0UiO/JdzCRODGkNpYkwfECe6kHNPfxXhvFyJA/T+YL7maijvrfACL90j0
+z00Z6wXDlMSMUHJZ87+PEfhBKlBK1nbVicjnCumNwMmCN3axIN2XnZ5Exj0zXlCp
++WZC07M4sqR89qHyFQPU7S8bMzOD8wwuAEba+wmr7w==
+=9nhs
 -----END PGP SIGNATURE-----
