@@ -1,4 +1,4 @@
-# WordPress on k8s + RDS database
+# WordPress on Kubernetes with RDS database
 
 [WordPress](https://wordpress.org/) is one of the most versatile open source content management systems on the market. A publishing platform for building blogs and websites.
 
@@ -24,6 +24,8 @@ Under the hood, this package provisions the RDS database using a Cloud Formation
 
 
 ## Installing the CNAB Bundle
+
+> **Important:** The default configuration is not recommended for production purposes, see the [Securing Installation](#securing-installation) section for more information.
 
 In order to manage the bundle, we are going to use a command line tool called [Duffle](https://github.com/deislabs/duffle), please ensure that you [have installed](https://github.com/deislabs/duffle/releases) its latest version before continue.
 
@@ -80,7 +82,7 @@ The following table lists the configurable parameters of the WordPress CNAB bund
 |`app-tls`|TLS configuration for the `app-domain` ingress including the required `cert-manager` annotations|`false`|
 
 
-### Usage examples
+### Usage Examples
 
 Installation with default settings, random database password and application expose via a LoadBalancer IP address
 
@@ -109,6 +111,18 @@ Once installed, it will take advantage of the monitoring and logging capabilitie
 ```bash
 $ duffle install my-release -c wordpress-creds --set app-domain=wordpress.kubeprod-domain.com --set app-tls=true -f ./bundle.cnab
 ```
+
+## Securing Installation
+
+### Limit network access to the RDS database
+
+By default, the RDS database is deployed alongside a security group that allows inbound access to the port 3306 from any IP address.
+
+We recommend that this configuration is changed to only allow inbound traffic from your Kubernetes cluster security group (if applicable) or limit the cidr inbound rule to known IP addresses (i.e your nodes IP addresses).
+
+### SSL communication between WordPress and RDS database
+
+By default, the communication between WordPress and the database is not encrypted. You can enable TLS encryption by using one of the WordPress plugins like [this one](https://wordpress.org/plugins/secure-db-connection), pointing to the custom CA stored in `/rds-combined-ca-bundle.pem`
 
 ## Development
 
