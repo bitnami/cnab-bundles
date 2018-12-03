@@ -112,8 +112,8 @@
   "Mappings": {
     "DatabaseConfig": {
       "Primary": {
-        "Engine": "mysql",
-        "EngineVersion": "5.7.19"
+        "Engine": "mariadb",
+        "EngineVersion": "10.1.34"
       }
     }
   },
