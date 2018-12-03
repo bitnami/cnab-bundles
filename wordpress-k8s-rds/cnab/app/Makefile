@@ -19,28 +19,31 @@ ifdef APP_DOMAIN
 endif
 
 # TODO, do not rely on the hostname stored in a filename
-install: rds_provision
+install: validate_credentials rds_provision
 	helm install $(CNAB_P_HELM_OPTIONS) -n $(CNAB_INSTALLATION_NAME) charts/$(CHART_NAME) \
 	  --set mariadb.enabled=false,externalDatabase.host=$(shell cat .rds_hostname),externalDatabase.password=$(DATABASE_PASSWORD) \
 		$(HELM_OVERRIDES)
 
-uninstall: rds_deprovision
+uninstall: validate_credentials rds_deprovision
 	helm delete $(CNAB_P_HELM_OPTIONS) $(CNAB_INSTALLATION_NAME) --purge
 
-upgrade:
+upgrade: validate_credentials
 	helm upgrade $(CNAB_P_HELM_OPTIONS) $(CNAB_INSTALLATION_NAME) charts/$(CHART_NAME)
 
-status:
+status: validate_credentials
 	helm status $(CNAB_P_HELM_OPTIONS) $(CNAB_INSTALLATION_NAME)
 
 rds_provision: .rds_hostname
 
 # provision will create the .rds_hostname file
 .rds_hostname:
-	@source rds-utils.sh \
-		&& STACK_NAME=$(CNAB_INSTALLATION_NAME) SKIP_DB_CREATION=false DATABASE_PASSWORD=$(DATABASE_PASSWORD) provision
+	@source lib-utils.sh \
+		&& STACK_NAME=$(CNAB_INSTALLATION_NAME) SKIP_DB_CREATION=false DATABASE_PASSWORD=$(DATABASE_PASSWORD) rds_provision
 
 rds_deprovision:
-	source rds-utils.sh && STACK_NAME=$(CNAB_INSTALLATION_NAME) deprovision
+	@source lib-utils.sh && STACK_NAME=$(CNAB_INSTALLATION_NAME) rds_deprovision
 
-.PHONY: install uninstall upgrade status rds_provision rds_deprovision
+validate_credentials:
+	@source lib-utils.sh && validate_credentials
+
+.PHONY: install uninstall upgrade status rds_provision rds_deprovision validate_credentials
