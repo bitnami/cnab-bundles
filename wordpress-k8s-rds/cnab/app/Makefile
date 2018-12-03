@@ -40,7 +40,7 @@ rds_provision: .rds_hostname
 	@source lib-utils.sh \
 		&& STACK_NAME=$(CNAB_INSTALLATION_NAME) SKIP_DB_CREATION=false DATABASE_PASSWORD=$(DATABASE_PASSWORD) rds_provision
 
-rds_deprovision: validate_credentials
+rds_deprovision:
 	@source lib-utils.sh && STACK_NAME=$(CNAB_INSTALLATION_NAME) rds_deprovision
 
 validate_credentials:
