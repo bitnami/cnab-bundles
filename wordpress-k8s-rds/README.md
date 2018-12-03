@@ -27,6 +27,14 @@ Under the hood, this package provisions the RDS database using a Cloud Formation
 
 In order to manage the bundle, we are going to use a command line tool called [Duffle](https://github.com/deislabs/duffle), please ensure that you [have installed](https://github.com/deislabs/duffle/releases) its latest version before continue.
 
+### Clone this repository
+
+Clone this repository to download the bundle and and verification key to your filesystem:
+
+```
+$ git clone https://github.com/bitnami/cnab-bundles
+$ cd ./cnab-bundles/wordpress-k8s-rds
+```
 
 ### Import Signing Key
 
