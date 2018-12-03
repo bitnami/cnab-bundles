@@ -29,7 +29,7 @@ In order to manage the bundle, we are going to use a command line tool called [D
 
 ### Clone this repository
 
-Clone this repository to download the bundle and and verification key to your filesystem:
+Clone this repository to download the bundle and the verification key to your filesystem:
 
 ```
 $ git clone https://github.com/bitnami/cnab-bundles
