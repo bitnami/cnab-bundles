@@ -135,5 +135,5 @@ $ duffle build .
 
 ```bash
 # Export the generated bundle
-duffle inspect wordpress-k8s-rds:devel --raw > ./bundle.cnab
+duffle show wordpress-k8s-rds:devel --raw > ./bundle.cnab
 ```

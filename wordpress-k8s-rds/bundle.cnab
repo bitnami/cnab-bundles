@@ -8,7 +8,7 @@ Hash: SHA256
   "invocationImages": [
     {
       "imageType": "docker",
-      "image": "gcr.io/bitnami-images/wordpress-k8s-rds-cnab:c2b6aa9ae19c8410f38b208f19c0503327ced202"
+      "image": "docker.io/bitnami/wordpress-k8s-rds-cnab:c9913796fb9a878b45cdbe4419a6fa6b3bd72333"
     }
   ],
   "images": [],
@@ -80,14 +80,14 @@ Hash: SHA256
 }
 -----BEGIN PGP SIGNATURE-----
 
-wsDcBAEBCAAQBQJcBaxaCRA6kfOOqDGW3QAAQkEMANd7tQgXDcYF8SeWWY7A+pJW
-HG1DeXJ1RajLFqVOfmbXDmRpuixV1ef1D4Cbrrh41p2CzzJfWMoDY4Dgg+wrKw8Y
-b22CFTpkMDW4DViMHjyn2qZ9oYQQQJZJTtjJ8xI1aKQBXSF3rMtp9CdQO1ZhPfIl
-WLzzjjID8PaPMM4sPpcgxbXVNw8yy6oykEo7ig7PgonysrWDDYMfeKwz8YaAyLjQ
-SUoT8eE+FtBaESa3oYrLCNWYU64ZeHoTMu9rup3jKXvP5Gbg7F/eVWBIkRRtx5RY
-YpVHOTLZY81zrYtbro3uBG66DCbSHOLhSsPNF/KROL5BEGl7fcSFApOD5xsigj5H
-KoxpentHN6cLktHJKdppE8wtwW77DczjBhXqq0PakO5lf6KZjexFdSpSPp2NHuUO
-xCSSthAG2m3aRNW5N5m2NNJfWyMCa0+OpVjug95Re3rXXU35FmUT5xJe66MA89yU
-G3/uT+CocbZSP76gpZHGTKV9qcn47IoWHq/Xr934nQ==
-=J0W2
+wsDcBAEBCAAQBQJcBsbWCRB3TuvCCwybvwAADwUMAGk9T0DSJdxIClS/g02rW/Je
+JeaH3SdF+5nRYHtRgJeTYcllM1CoHFrqgRNlIJPC2Zy/g5iPkwurbglBzVHf68CQ
+nVQ5BxuHZP2Yscr9Y0D4de5UMs5KwzsECPtRKlhHaNZEzi4Cb13z3zKQS/21AxNu
+HuLkTvUrpv1AAEW9KrB3Z6yyLR0utlJraee5BhfIgifIF4MGqbHeuAbGt/AlPjx8
+gieG/BOQVXEDPt5U9/L5k62r4dwe3TDg689DlWzqKgVyph0FBG9xZQNmUX1k8b2R
+Z3CttnDAIbOdoiVnhS1QR0BqixgeJRaeYySQde3/FmMsv14TLRd5Uk7gqvgXCUHO
+RmKHOvR3HSkIwAUuWMFZ9DUXo4EkK6Onuf8qczo6Ap0yvqNgisnb+0+sMrNFWmBo
+SnOMI78U6G3+m1ryS+v+d1Nw3R57xOWLYdlQclIBJUi3Cuqg3l60RR5+xuz25ZLF
+e5FgUoRjG9m1mU8J6Ht2tSH6/LQujFcdk0ZOXjnQ3Q==
+=Wmj8
 -----END PGP SIGNATURE-----
