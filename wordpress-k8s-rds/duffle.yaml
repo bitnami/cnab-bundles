@@ -3,7 +3,7 @@ version: 0.1.0
 description: WordPress running in K8s connected to a provisioned RDS instance
 keywords: []
 maintainers: []
-components:
+invocationImages:
   cnab:
     name: cnab
     builder: docker
