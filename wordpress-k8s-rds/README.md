@@ -12,7 +12,7 @@ $ duffle install my-wordpress -c wordpress-creds -f ./bundle.cnab
 
 ## Introduction
 
-This [CNAB bundle](https://github.com/deislabs/cnab-spec) bootstraps a MariaDB RDS database as well as a [WordPress](https://github.com/bitnami/bitnami-docker-wordpress) deployment on a [Kubernetes](http://kubernetes.io) cluster.
+This [CNAB bundle](https://cnab.io) bootstraps a MariaDB RDS database as well as a [WordPress](https://github.com/bitnami/bitnami-docker-wordpress) deployment on a [Kubernetes](http://kubernetes.io) cluster.
 
 Under the hood, this package provisions the RDS database using a Cloud Formation template and deploys WordPress by relying on the Bitnami [WordPress Helm chart](https://github.com/helm/charts/tree/master/stable/wordpress).
 
@@ -31,7 +31,7 @@ See it in action in the following video:
 
 > **Important:** The default configuration is not recommended for production purposes, see the [Securing Installation](#securing-the-installation) section for more information.
 
-In order to manage the bundle, we are going to use a command line tool called [Duffle](https://github.com/deislabs/duffle), please ensure that you [have installed](https://github.com/deislabs/duffle/releases) its latest version before continue.
+In order to manage the bundle, we are going to use a command line tool called [Duffle](https://duffle.sh), please ensure that you [have installed](https://github.com/deislabs/duffle/releases) its latest version before continue.
 
 ### Clone this repository
 

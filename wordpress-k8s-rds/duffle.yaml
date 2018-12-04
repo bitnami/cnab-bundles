@@ -1,8 +1,18 @@
 name: wordpress-k8s-rds
 version: 0.1.0
-description: WordPress running in K8s connected to a provisioned RDS instance
-keywords: []
-maintainers: []
+description: Deploy WordPress in Kubernetes along with an Amazon RDS instance
+keywords:
+- wordpress
+- blog
+- k8s
+- kubernetes
+- aws
+- rds
+- bkpr
+maintainers:
+- name: Bitnami
+  email: containers@bitnami.com
+  url: http://bitnami.com
 invocationImages:
   cnab:
     name: cnab
