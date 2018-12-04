@@ -25,7 +25,7 @@ Under the hood, this package provisions the RDS database using a Cloud Formation
 
 ## Installing the CNAB Bundle
 
-> **Important:** The default configuration is not recommended for production purposes, see the [Securing Installation](#securing-thinstallation) section for more information.
+> **Important:** The default configuration is not recommended for production purposes, see the [Securing Installation](#securing-the-installation) section for more information.
 
 In order to manage the bundle, we are going to use a command line tool called [Duffle](https://github.com/deislabs/duffle), please ensure that you [have installed](https://github.com/deislabs/duffle/releases) its latest version before continue.
 
@@ -122,7 +122,7 @@ We recommend that this configuration is changed to only allow inbound traffic fr
 
 ### SSL communication between WordPress and RDS database
 
-By default, the communication between WordPress and the database is not encrypted. You can enable TLS encryption by using one of the available [Wordpress plugins](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_MariaDB.html#MariaDB.Concepts.SSLSupport). On the AWS side, just follow the instructions that can be found [here](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_MariaDB.html#MariaDB.Concepts.SSLSupport).
+By default, the communication between WordPress and the database is not encrypted. You can enable TLS encryption by using one of the available [Wordpress plugins](https://wordpress.org/plugins/secure-db-connection). On the AWS side, just follow the instructions that can be found [here](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_MariaDB.html#MariaDB.Concepts.SSLSupport).
 
 ## Development
 
