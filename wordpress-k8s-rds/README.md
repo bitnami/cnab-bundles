@@ -16,6 +16,10 @@ This [CNAB bundle](https://github.com/deislabs/cnab-spec) bootstraps a MariaDB R
 
 Under the hood, this package provisions the RDS database using a Cloud Formation template and deploys WordPress by relying on the Bitnami [WordPress Helm chart](https://github.com/helm/charts/tree/master/stable/wordpress).
 
+See it in action in the following video:
+
+[![Bundle installation video](https://img.youtube.com/vi/RJZhJr4q5Sw/0.jpg )](https://www.youtube.com/watch?v=RJZhJr4q5Sw)
+
 ## Prerequisites
 
 * AWS account with permissions to provision RDS databases and deploy Cloud Formation Stacks.
