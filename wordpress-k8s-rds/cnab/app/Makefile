@@ -44,6 +44,6 @@ rds_deprovision:
 	@source lib-utils.sh && STACK_NAME=$(CNAB_INSTALLATION_NAME) rds_deprovision
 
 validate_credentials:
-	@source lib-utils.sh && validate_credentials
+	@source lib-utils.sh && validate_credentials charts/$(CHART_NAME)
 
 .PHONY: install uninstall upgrade status rds_provision rds_deprovision validate_credentials
