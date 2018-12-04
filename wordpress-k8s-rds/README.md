@@ -6,7 +6,7 @@
 
 ## TL;DR;
 
-```console
+```bash
 $ duffle install my-wordpress -c wordpress-creds -f ./bundle.cnab
 ```
 
@@ -122,7 +122,7 @@ We recommend that this configuration is changed to only allow inbound traffic fr
 
 ### SSL communication between WordPress and RDS database
 
-By default, the communication between WordPress and the database is not encrypted. You can enable TLS encryption by using one of the WordPress plugins like [this one](https://wordpress.org/plugins/secure-db-connection), pointing to the custom CA stored in `/rds-combined-ca-bundle.pem`
+By default, the communication between WordPress and the database is not encrypted. You can enable TLS encryption by using one of the available [Wordpress plugins](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_MariaDB.html#MariaDB.Concepts.SSLSupport). On the AWS side, just follow the instructions that can be found [here](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_MariaDB.html#MariaDB.Concepts.SSLSupport).
 
 ## Development
 
