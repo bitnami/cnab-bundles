@@ -9,10 +9,13 @@ set -eu -o pipefail
 
 # Makes a naive validation of the provided credentials by
 # 1 - Checking that the client has access to a runner instance of Tiller
-# 2 - Validate that the AWS credentials are valid
+# 2 - Helm client and server are compatible
+# 3 - Validate that the AWS credentials are valid
 validate_credentials() {
+  local chart_path=${1:?}
   log "Validating Kubernetes credentials and Tiller installation"
-  helm version > /dev/null || \
+  # We do a dry run to detect imcompatibilities between the client and the server
+  helm install --dry-run ${chart_path} > /dev/null || \
     (log "Kubernetes and Tiller validation error" && exit 1)
 
   log "Validating AWS credentials"
