@@ -25,7 +25,7 @@ Under the hood, this package provisions the RDS database using a Cloud Formation
 
 ## Installing the CNAB Bundle
 
-> **Important:** The default configuration is not recommended for production purposes, see the [Securing Installation](#securing-installation) section for more information.
+> **Important:** The default configuration is not recommended for production purposes, see the [Securing Installation](#securing-thinstallation) section for more information.
 
 In order to manage the bundle, we are going to use a command line tool called [Duffle](https://github.com/deislabs/duffle), please ensure that you [have installed](https://github.com/deislabs/duffle/releases) its latest version before continue.
 
@@ -112,7 +112,7 @@ Once installed, it will take advantage of the monitoring and logging capabilitie
 $ duffle install my-release -c wordpress-creds --set app-domain=wordpress.kubeprod-domain.com --set app-tls=true -f ./bundle.cnab
 ```
 
-## Securing Installation
+## Securing The Installation
 
 ### Limit network access to the RDS database
 
