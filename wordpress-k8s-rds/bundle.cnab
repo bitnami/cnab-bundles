@@ -4,7 +4,23 @@ Hash: SHA256
 {
   "name": "wordpress-k8s-rds",
   "version": "0.1.0",
-  "description": "WordPress running in K8s connected to a provisioned RDS instance",
+  "description": "Deploy WordPress in Kubernetes along with an Amazon RDS instance",
+  "keywords": [
+    "wordpress",
+    "blog",
+    "k8s",
+    "kubernetes",
+    "aws",
+    "rds",
+    "bkpr"
+  ],
+  "maintainers": [
+    {
+      "name": "Bitnami",
+      "email": "containers@bitnami.com",
+      "url": "http://bitnami.com"
+    }
+  ],
   "invocationImages": [
     {
       "imageType": "docker",
@@ -80,14 +96,14 @@ Hash: SHA256
 }
 -----BEGIN PGP SIGNATURE-----
 
-wsDcBAEBCAAQBQJcBsqRCRB3TuvCCwybvwAAj9gMAIslFveDLN98IqX+mf1mq8Dx
-FBx4DOaV1JQqgXj3baEKV/8vv4tkXF1EJbAulZDOASIzknIFYjWJc5ytmzIGCj08
-jEtCQQG2j6MwNv+Tzr8azk0YxJnVXeOkhQ89Psq9tNAMGKDeFQQcCcZNhe/7QznE
-8fylK772sIgS4DJ4Eq3DbaGdBoaitUsuIOfpe9av77Q6UdZncOXg7i+cVTPBOIzw
-S1lGWbCE1AlnqY8ZeWQcYjdjC+ep5bHcjmicazD+F8l5wg3YBJEfqaIIBfzQXNoM
-3/cDZ96beo2ZNuhR8DwVVqaW3ku/qs2Q3UPLYRckpyrC6sZ/5ZAI3ROD1MMMlTjE
-FU6MusIWo4pxnJ1kAGUFWKTk7W361dMmR9cTK02OkzbW/Tiqv4/CMVWARgJovwz0
-fjR3HvxcMXEzx3kdNp/VyN5qAKsWWJtw0iCj3IJ51tPo5jxN0j8wbvBsj+FzRpi/
-anQjZNe4oO73oMdipLQ6r9kOTkuigVg8r8Yb8hIa4g==
-=ZzVh
+wsDcBAEBCAAQBQJcBvHeCRB3TuvCCwybvwAAP2wMADNcblqvIb9gGUGb4inPPdKm
++PAk9jNlNP73HMqjathZoxR5E5J3XD25Xasj9gcXqE8MWFaxA+5W37qTaOtdYUTU
+sLcNASgbtStbjv/5e0y6VArgPIQ69GnDBe4RsUsCyjiAktakFb9ZIHI0H3J3iJzE
+v5a5gf1SI+r/gtV2sErfYz6HxbaEUcYSnY0dTdjthox4q+74Up2UtZdOM51nfqVp
+91XXm2yU22bh6o/EqXJh/ZYbu3D+Hg5ZxJrxbEIUPFaCd/pqpY7f9Mt5sWaw5+IB
+bfjIl62Q3UrMed8zjSzZ1IyPs2rhn3WiGe4bk9oEvETpunmYYQ1ZGtkppMm6/LQi
+69o6+J5ZBmxRc0BTynujqcA5F0c1ieCu8TrlLIwyv5NXzDkfuiYHp02HimN+SFgi
+UCnxV/2S+7TxP5hcjuDhK90QnbY51ettSx0+tjDndXpDOkSAo9nD004T0hi4Nxx0
+jmTKJYSuA7Uon83ArH/D9WRtKQlZYhMrQIcPwKlRjA==
+=Fp+I
 -----END PGP SIGNATURE-----
