@@ -8,7 +8,7 @@ invocationImages:
     name: cnab
     builder: docker
     configuration:
-      registry: gcr.io/bitnami-images
+      registry: bitnami
 parameters:
   aws-default-region:
     type: string
