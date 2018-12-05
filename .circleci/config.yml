@@ -1,6 +1,11 @@
+# Basic, temporary safety-net build script to cover developers from forgetting to push images
+# 1 - Builds a docker image based on the cnab invocation image
+# 2 - Tags it and pushes it to the publish repository
 version: 2
 jobs:
   build:
+    branches:
+      only: master
     docker:
       - image: circleci/golang:1.11
     steps:
