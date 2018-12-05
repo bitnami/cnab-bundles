@@ -25,14 +25,7 @@ jobs:
           # Only build and push if the image has not already being published. This is a temporary workaround
           # Ideally we would like to check the digest of the image and compare it with the one
           # in the bundle.cnab file. This is not currently possible https://github.com/deislabs/duffle/issues/392
-
-          # Split name and tag
-          FS=':' read -r -a image_info <<< ${image_name}
-
-          image_url="https://index.docker.io/v1/repositories/${image_info[0]}/tags/${image_info[1]}"
-          echo $image_name
-          echo $image_url
-          if $(curl -s -f -lSL $image_url); then
+          if $(docker pull $image_name > /dev/null) then
             echo "docker image exists"
           else
             echo "docker image does not exist"
