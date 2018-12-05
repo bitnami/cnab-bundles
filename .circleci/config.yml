@@ -29,7 +29,9 @@ jobs:
           # Split name and tag
           FS=':' read -r -a image_info <<< ${image_name}
 
-          if $(curl -s -f -lSL https://index.docker.io/v1/repositories/${image_info[0]}/tags/${image_info[1]}); then
+          image_url="https://index.docker.io/v1/repositories/${image_info[0]}/tags/${image_info[1]}"
+          echo $image_url
+          if $(curl -s -f -lSL $image_url); then
             echo "docker image exists"
           else
             echo "docker image does not exist"
