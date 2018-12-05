@@ -4,9 +4,3 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run: |
-        docker login -u $DOCKER_USER -p $DOCKER_PASS
-
-      - run: |
-        cd wordpress-k8s-rds/cnab
-        docker build -t test-todo:$CIRCLE_BRANCH .
