@@ -128,6 +128,18 @@ We recommend that this configuration is changed to only allow inbound traffic fr
 
 By default, the communication between WordPress and the database is not encrypted. You can enable TLS encryption by using one of the available [Wordpress plugins](https://wordpress.org/plugins/secure-db-connection). On the AWS side, just follow the instructions that can be found [here](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_MariaDB.html#MariaDB.Concepts.SSLSupport).
 
+## Troubleshooting
+
+### Issue installing the bundle in GKE or EKS
+
+Both Amazon and Google Kubernetes services (EKS and GKE) rely on local tools (`aws-iam-authenticator` and `gcloud` respectively) to perform authentication. The bundle invocation image does not include those tools and providing the `.kube/config` file is not always enough, that's why you might get errors like this one during the validation step.
+
+```
+err=fork/exec gcloud: no such file or directory output= stderr=
+```
+
+If you are running into this issue, there is a way to workaround it by refreshing the access token stored in `.kube/config` before performing any action with `duffle`. In order to refresh the token, you just need to run any `kubectl` command, i.e `kubectl get pods`. Once done, the operation on the bundle should work as expected.
+
 ## Development
 
 
