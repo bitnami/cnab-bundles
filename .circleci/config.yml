@@ -1,6 +1,10 @@
 version: 2
 jobs:
   build:
-    machine: true
+    docker:
+      - image: circleci/golang:1.11
     steps:
+      - setup_remote_docker
       - checkout
+      - run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASS
