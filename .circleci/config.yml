@@ -7,10 +7,6 @@ jobs:
      - run: |
          docker login -u $DOCKER_USER -p $DOCKER_PASS
 
-     # build the application image
      - run: |
        cd wordpress-k8s-rds/cnab
        docker build -t test-todo:$CIRCLE_BRANCH .
-
-     # deploy the image
-     # - run: docker push company/app:$CIRCLE_BRANCH
