@@ -25,7 +25,8 @@ jobs:
           # Only build and push if the image has not already being published. This is a temporary workaround
           # Ideally we would like to check the digest of the image and compare it with the one
           # in the bundle.cnab file. This is not currently possible https://github.com/deislabs/duffle/issues/392
-          if $(docker pull $image_name > /dev/null) then
+          # NOTE that docker pull is quite ineficient for this task
+          if $(docker pull $image_name > /dev/null); then
             echo "docker image exists"
           else
             echo "docker image does not exist"
