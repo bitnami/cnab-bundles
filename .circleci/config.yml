@@ -8,12 +8,9 @@ jobs:
       - checkout
       - run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASS
-
       - run: |
           cd wordpress-k8s-rds
           image_name=$(grep '"image":' bundle.cnab  | awk -F': ' '{print $2}' | awk -F'\"' '{print $2}')
-          echo $image_name
 
-          docker_image=bitnami/wordpress-k8s-rds-cnab:devel
-          docker build -t ${docker_image} ./cnab
-          docker push ${docker_image}
+          docker build -t ${image_name} ./cnab
+          docker push ${image_name}
