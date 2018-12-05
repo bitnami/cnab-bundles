@@ -24,7 +24,7 @@ Hash: SHA256
   "invocationImages": [
     {
       "imageType": "docker",
-      "image": "bitnami/wordpress-k8s-rds-cnab:d45fe12775328fc4c843f2840f6988f6255a6a02-buu"
+      "image": "bitnami/wordpress-k8s-rds-cnab:d45fe12775328fc4c843f2840f6988f6255a6a02"
     }
   ],
   "images": [],

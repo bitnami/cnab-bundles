@@ -9,8 +9,8 @@
 version: 2
 jobs:
   build:
-    # branches:
-    #   only: master
+    branches:
+      only: master
     docker:
       - image: circleci/golang:1.11
     steps:
@@ -31,5 +31,5 @@ jobs:
           else
             echo "docker image does not exist"
             docker build -t ${image_name} ./cnab
-            # docker push ${image_name}
+            docker push ${image_name}
           fi
