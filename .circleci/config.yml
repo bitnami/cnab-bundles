@@ -1,4 +1,9 @@
 # Basic, temporary safety-net build script to cover developers from forgetting to push images
+# NOTE: It is not the best solution since it pushes the image after the code has been merged so references
+# to a non-existing image might exist, that said it is an easy temporary workaround.
+# The main issue is that we do not have implemented a release process yet.
+# TODO: Build the image as part of a bundle release process
+# It takes care of:
 # 1 - Builds a docker image based on the cnab invocation image
 # 2 - Tags it and pushes it to the publish repository
 version: 2
