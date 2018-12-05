@@ -11,6 +11,6 @@ jobs:
 
       - run: |
           cd wordpress-k8s-rds/cnab
-          docker_image = bitnami/wordpress-k8s-rds-cnab:devel
+          docker_image=bitnami/wordpress-k8s-rds-cnab:devel
           docker build -t ${docker_image} .
           docker push ${docker_image}
