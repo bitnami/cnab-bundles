@@ -9,8 +9,8 @@
 version: 2
 jobs:
   build:
-    branches:
-      only: master
+    # branches:
+    #   only: master
     docker:
       - image: circleci/golang:1.11
     steps:
@@ -22,5 +22,17 @@ jobs:
           cd wordpress-k8s-rds
           image_name=$(grep '"image":' bundle.cnab  | awk -F': ' '{print $2}' | awk -F'\"' '{print $2}')
 
-          docker build -t ${image_name} ./cnab
-          docker push ${image_name}
+          # Only build and push if the image has not already being published. This is a temporary workaround
+          # Ideally we would like to check the digest of the image and compare it with the one
+          # in the bundle.cnab file. This is not currently possible https://github.com/deislabs/duffle/issues/392
+
+          # Split name and tag
+          FS=':' read -r -a image_info <<< ${image_name}
+
+          if $(curl -s -f -lSL https://index.docker.io/v1/repositories/${image_info[0]}/tags/${image_info[1]}); then
+            echo "docker image exists"
+          else
+            echo "docker image does not exist"
+            docker build -t ${image_name} ./cnab
+            # docker push ${image_name}
+          fi
