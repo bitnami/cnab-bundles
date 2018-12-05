@@ -1,0 +1,35 @@
+# Basic, temporary safety-net build script to cover developers from forgetting to push images
+# NOTE: It is not the best solution since it pushes the image after the code has been merged so references
+# to a non-existing image might exist, that said it is an easy temporary workaround.
+# The main issue is that we do not have implemented a release process yet.
+# TODO: Build the image as part of a bundle release process
+# It takes care of:
+# 1 - Builds a docker image based on the cnab invocation image
+# 2 - Tags it and pushes it to the publish repository
+version: 2
+jobs:
+  build:
+    branches:
+      only: master
+    docker:
+      - image: circleci/golang:1.11
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - run: |
+          cd wordpress-k8s-rds
+          image_name=$(grep '"image":' bundle.cnab  | awk -F': ' '{print $2}' | awk -F'\"' '{print $2}')
+
+          # Only build and push if the image has not already being published. This is a temporary workaround
+          # Ideally we would like to check the digest of the image and compare it with the one
+          # in the bundle.cnab file. This is not currently possible https://github.com/deislabs/duffle/issues/392
+          # NOTE that docker pull is quite ineficient for this task
+          if $(docker pull $image_name > /dev/null); then
+            echo "docker image exists"
+          else
+            echo "docker image does not exist"
+            docker build -t ${image_name} ./cnab
+            docker push ${image_name}
+          fi
